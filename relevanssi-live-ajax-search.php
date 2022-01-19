@@ -149,7 +149,7 @@ function relevanssi_live_search_init() {
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		relevanssi_live_search_request_handler();
 	} else {
-		include_once dirname( __FILE__ ) . '/includes/class-form.php';
+		include_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-form.php';
 		$form = new Relevanssi_Live_Search_Form();
 		$form->setup();
 	}
