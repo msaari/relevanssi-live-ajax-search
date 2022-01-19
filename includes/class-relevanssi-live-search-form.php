@@ -1,8 +1,8 @@
 <?php
 /**
- * Relevanssi_Live_Search_Form
+ * The Relevanssi_Live_Search_Form class.
  *
- * @package relevanssi-live-ajax-search
+ * @package Relevanssi Live Ajax Search
  */
 
 // Exit if accessed directly.

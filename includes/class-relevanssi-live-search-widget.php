@@ -1,8 +1,8 @@
 <?php
 /**
- * Relevanssi_Live_Search_Widget.
+ * The Relevanssi_Live_Search_Widget class.
  *
- * @package relevanssi-live-ajax-search
+ * @package Relevanssi Live Ajax Search
  */
 
 /**
