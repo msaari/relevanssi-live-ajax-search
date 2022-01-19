@@ -51,7 +51,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 			return $plugins;
 		}
 
-		if ( ! isset( $_REQUEST['swpquery'] ) || empty( $_REQUEST['swpquery'] ) ) {
+		if ( ! isset( $_REQUEST['rlvquery'] ) || empty( $_REQUEST['rlvquery'] ) ) {
 			return $plugins;
 		}
 
@@ -77,9 +77,9 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 * @uses relevanssi_Live_Search_Client::get_posts_per_page() to retrieve the number of results to return
 	 */
 	public function search() {
-		if ( isset( $_REQUEST['swpquery'] ) && ! empty( $_REQUEST['swpquery'] ) ) {
+		if ( isset( $_REQUEST['rlvquery'] ) && ! empty( $_REQUEST['rlvquery'] ) ) {
 
-			$query = sanitize_text_field( stripslashes( $_REQUEST['swpquery'] ) );
+			$query = sanitize_text_field( stripslashes( $_REQUEST['rlvquery'] ) );
 
 			$args      = $_POST;
 			$args['s'] = $query;
@@ -138,7 +138,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		// Output the results using the results template.
 		$results = new Relevanssi_Live_Search_Template();
 
-		$results->get_template_part( 'search-results', $engine );
+		$results->get_template_part( 'search-results' );
 	}
 
 	/**

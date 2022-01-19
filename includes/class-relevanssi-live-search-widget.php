@@ -32,7 +32,7 @@ class Relevanssi_Live_Search_Widget extends WP_Widget {
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
-	public function widget( array $args, array $instance ) {
+	public function widget( $args, $instance ) {
 		$title = apply_filters( 'widget_title', $instance['title'] );
 
 		$destination = empty( $instance['destination'] ) ? '' : $instance['destination'];
@@ -83,7 +83,7 @@ class Relevanssi_Live_Search_Widget extends WP_Widget {
 	 *
 	 * @return string|void
 	 */
-	public function form( array $instance ) {
+	public function form( $instance ) {
 
 		$widget_title       = isset( $instance['title'] ) ? $instance['title'] : __( 'Search', 'relevanssi-live-ajax-search' );
 		$widget_placeholder = isset( $instance['placeholder'] ) ? $instance['placeholder'] : __( 'Search for...', 'relevanssi-live-ajax-search' );
@@ -112,7 +112,7 @@ class Relevanssi_Live_Search_Widget extends WP_Widget {
 			</select>
 		</p>
 		<?php $rlvuniqid = uniqid( 'rlv' ); ?>
-		<p><a href="#" class="button searchwp-widget-<?php echo esc_attr( $rlvuniqid ); ?>"><?php esc_html_e( 'Advanced', 'relevanssi-live-ajax-search' ); ?></a></p>
+		<p><a href="#" class="button relevanssi-widget-<?php echo esc_attr( $rlvuniqid ); ?>"><?php esc_html_e( 'Advanced', 'relevanssi-live-ajax-search' ); ?></a></p>
 		<div class="relevanssi-live-search-widget-advanced" style="display:none;">
 			<p>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'placeholder' ) ); ?>"><?php esc_html_e( 'Placeholder:', 'relevanssi-live-ajax-search' ); ?></label>
@@ -149,7 +149,7 @@ class Relevanssi_Live_Search_Widget extends WP_Widget {
 	 *
 	 * @return array Updated safe values to be saved.
 	 */
-	public function update( array $new_instance, array $old_instance ) : array {
+	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 
 		$instance['title']       = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';

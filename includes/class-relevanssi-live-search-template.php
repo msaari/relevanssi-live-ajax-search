@@ -27,7 +27,7 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 	 * @return string The template directory within this plugin
 	 */
 	public function get_template_directory() : string {
-		return trailingslashit( $this->dir ) . 'templates';
+		return trailingslashit( $this->directory_name ) . 'templates';
 	}
 
 	/**
@@ -76,7 +76,7 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 		// Default to not found.
 		$located = false;
 
-		$template_dir = apply_filters( 'searchwp_live_search_template_dir', 'searchwp-live-ajax-search' );
+		$template_dir = apply_filters( 'relevanssi_live_search_template_dir', 'relevanssi-live-ajax-search' );
 
 		// Try to find the template file.
 		foreach ( (array) $template_names as $template_name ) {
@@ -111,7 +111,7 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 			}
 		}
 
-		$located = apply_filters( 'searchwp_live_search_results_template', $located, $this );
+		$located = apply_filters( 'relevanssi_live_search_results_template', $located, $this );
 
 		if ( ( true === $load ) && ! empty( $located ) ) {
 			load_template( $located, $require_once );

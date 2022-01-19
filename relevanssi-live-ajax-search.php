@@ -187,7 +187,7 @@ add_action( 'wp_ajax_relevanssi_live_search_notice_dismiss', 'relevanssi_live_se
  *
  * @return boolean True if the notice should be displayed, false otherwise.
  */
-function relevanssi_live_search_notice_applicable() : boolean {
+function relevanssi_live_search_notice_applicable() : bool {
 	// If Relevanssi is installed, bail out.
 	if (
 		is_plugin_active( 'relevanssi/relevanssi.php' )
