@@ -1,0 +1,21 @@
+{
+	"name": "painavasana/relevanssi-live-ajax-search",
+	"description": "Live Ajax Search for WordPress",
+	"require": {
+		"php": "^7.0 || ^8.0"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.5",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+		"phpcompatibility/php-compatibility": "^9.3",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"wp-coding-standards/wpcs": "*",
+		"phpunit/phpunit": "^7"
+	},
+	"scripts": {
+		"lint": "./vendor/bin/phpcs -p -s",
+		"test": "./vendor/bin/phpunit --testdox",
+		"testMulti": "@test -c multisite.xml",
+		"coverage": "@test --coverage-html coverage"
+	}
+}

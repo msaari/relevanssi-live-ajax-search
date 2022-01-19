@@ -1,8 +1,8 @@
 {
-  "name": "searchwp-live-ajax-search",
+  "name": "relevanssi-live-ajax-search",
   "version": "2.0.0",
   "description": "",
-  "main": "assets/javascript/src/searchwp-live-ajax-search.js",
+  "main": "assets/javascript/src/relevanssi-live-ajax-search.js",
   "scripts": {
     "watch": "rollup -c -w --environment BUILD:production"
   },
