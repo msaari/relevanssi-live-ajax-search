@@ -1,18 +1,24 @@
 <?php
+/**
+ * Relevanssi_Live_Search_Template
+ *
+ * @package relevanssi-live-ajax-search
+ */
 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Class SearchWP_Live_Search_Template
+ * Class Relevanssi_Live_Search_Template
  *
  * Template loader class based on Pippin Williamson's guide
  * http://pippinsplugins.com/template-file-loaders-plugins/
  *
  * @since 1.0
  */
-class SearchWP_Live_Search_Template extends SearchWP_Live_Search {
-
+class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 	/**
 	 * Retrieve the template directory within this plugin
 	 *
@@ -20,7 +26,7 @@ class SearchWP_Live_Search_Template extends SearchWP_Live_Search {
 	 *
 	 * @return string The template directory within this plugin
 	 */
-	function get_template_directory() {
+	public function get_template_directory() : string {
 		return trailingslashit( $this->dir ) . 'templates';
 	}
 
@@ -29,13 +35,14 @@ class SearchWP_Live_Search_Template extends SearchWP_Live_Search {
 	 *
 	 * @sine 1.0
 	 *
-	 * @param string $slug The template slug (without file extension)
-	 * @param null $name The template name (appended to $slug if provided)
-	 * @param bool $load Whether to load the template part
+	 * @param string      $slug The template slug (without file extension).
+	 * @param string|null $name The template name (appended to $slug if
+	 * provided), default null.
+	 * @param bool        $load Whether to load the template part.
 	 *
 	 * @return bool|string The location of the applicable template file
 	 */
-	function get_template_part( $slug, $name = null, $load = true ) {
+	public function get_template_part( string $slug, $name = null, bool $load = true ) {
 
 		do_action( 'get_template_part_' . $slug, $slug, $name );
 
@@ -47,25 +54,25 @@ class SearchWP_Live_Search_Template extends SearchWP_Live_Search {
 		$templates[] = $slug . '.php';
 
 		// Allow filtration of template parts.
-		$templates = apply_filters( 'searchwp_live_search_get_template_part', $templates, $slug, $name );
+		$templates = apply_filters( 'relevanssi_live_search_get_template_part', $templates, $slug, $name );
 
 		return $this->locate_template( $templates, $load, false );
 	}
 
 	/**
-	 * Check for the applicable template in the child theme, then parent theme, and in the plugin dir as a last resort
-	 * and output it if it was located
+	 * Check for the applicable template in the child theme, then parent theme,
+	 * and in the plugin dir as a last resort and output it if it was located.
 	 *
 	 * @since 1.0
 	 *
-	 * @param array $template_names The potential template names in order of precedence
-	 * @param bool $load Whether to load the template file
-	 * @param bool $require_once Whether to require the template file once
+	 * @param array $template_names The potential template names in order of
+	 * precedence.
+	 * @param bool  $load           Whether to load the template file.
+	 * @param bool  $require_once   Whether to require the template file once.
 	 *
 	 * @return bool|string The location of the applicable template file
 	 */
-	function locate_template( $template_names, $load = false, $require_once = true ) {
-
+	private function locate_template( array $template_names, bool $load = false, bool $require_once = true ) {
 		// Default to not found.
 		$located = false;
 
@@ -106,7 +113,7 @@ class SearchWP_Live_Search_Template extends SearchWP_Live_Search {
 
 		$located = apply_filters( 'searchwp_live_search_results_template', $located, $this );
 
-		if ( ( true == $load ) && ! empty( $located ) ) {
+		if ( ( true === $load ) && ! empty( $located ) ) {
 			load_template( $located, $require_once );
 		}
 

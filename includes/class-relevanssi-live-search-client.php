@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once dirname( __FILE__ ) . '/class-template.php';
+require_once dirname( __FILE__ ) . '/class-relevanssi-live-search-template.php';
 
 /**
  * Class Relevanssi_Live_Search_Client
