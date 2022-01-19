@@ -1,4 +1,4 @@
-=== SearchWP Live Ajax Search ===
+=== Relevanssi Live Ajax Search ===
 Contributors: jchristopher
 Tags: search, live, ajax
 Requires at least: 3.9
