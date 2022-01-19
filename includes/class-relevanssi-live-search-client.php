@@ -125,6 +125,8 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	public function show_results( $args = array() ) {
 		global $wp_query;
 
+		$args['relevanssi'] = true;
+
 		// We're using query_posts() here because we want to prep the entire
 		// environment for our template loader, allowing the developer to
 		// utilize everything they normally would in a theme template (and

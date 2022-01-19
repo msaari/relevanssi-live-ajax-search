@@ -123,7 +123,6 @@ class Relevanssi_Live_Search {
  */
 function relevanssi_live_search_request_handler( $execute_search = false ) {
 	include_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-client.php';
-	include_once dirname( __FILE__ ) . '/includes/class-relevanssi-bridge.php';
 
 	$client = new Relevanssi_Live_Search_Client();
 	$client->setup();
