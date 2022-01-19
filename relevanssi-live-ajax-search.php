@@ -2,14 +2,17 @@
 /**
  * Plugin Name: Relevanssi Live Ajax Search
  * Plugin URI: https://www.relevanssi.com/
- * Description: Enhance your search forms with live search, powered by SearchWP (if installed)
- * Version: 1.6.1
+ * Description: Enhance your search forms with live search.
+ * Version: 1.0
  * Requires PHP: 7.0
- * Author: SearchWP, LLC
- * Author URI: https://searchwp.com/
+ * Author: Mikko Saari
+ * Author URI: https://www.relevanssi.com/
  * Text Domain: relevanssi-live-ajax-search
  *
- * @package relevanssi-live-ajax-search
+ * @package Relevanssi Live Ajax Search
+ * @author  Mikko Saari
+ * @license https://wordpress.org/about/gpl/ GNU General Public License
+ * @see     https://www.relevanssi.com/
  */
 
 /*
@@ -26,9 +29,9 @@
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-	This plugin has been forked from the original SearchWP Live Ajax
-	Search plugin by SearchWP, LLC. Copyright for the original code
-	is 2014-2020 SearchWP, LLC.
+	This plugin has been forked from the version 1.6.1 of the original
+	SearchWP Live Ajax Search plugin by SearchWP, LLC. Copyright for the
+	original code is 2014-2020 SearchWP, LLC.
 
 	Copyright 2022 Mikko Saari  (email: mikko@mikkosaari.fi)
 */
@@ -39,82 +42,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Widget support.
+require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search.php';
 require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-widget.php';
-
-/**
- * Class Relevanssi_Live_Search
- *
- * The main Relevanssi Live Ajax Search Class properly routes searches and all
- * other requests/utilization.
- *
- * @since 1.0
- */
-class Relevanssi_Live_Search {
-	/**
-	 * The plugin file dirname().
-	 *
-	 * @var string $directory_name
-	 */
-	public $directory_name;
-
-	/**
-	 * The plugin file plugins_url().
-	 *
-	 * @var string $url
-	 */
-	public $url;
-
-	/**
-	 * Plugin version number.
-	 *
-	 * @var string $version
-	 */
-	public $version = '1.6.1';
-
-	/**
-	 * The search results.
-	 *
-	 * @var array $results
-	 */
-	public $results = array();
-
-	/**
-	 * The class constructor.
-	 */
-	public function __construct() {
-		$this->directory_name = dirname( __FILE__ );
-		$this->url            = plugins_url( 'relevanssi-live-ajax-search', $this->directory_name );
-
-		$this->upgrade();
-	}
-
-	/**
-	 * Updates the plugin last updated option.
-	 */
-	private function upgrade() {
-		$last_version = get_option( 'relevanssi_live_search_version' );
-
-		if ( false === $last_version ) {
-			$last_version = 0;
-		}
-
-		if ( ! version_compare( $last_version, $this->version, '<' ) ) {
-			return;
-		}
-
-		if ( version_compare( $last_version, '1.6.1', '<' ) ) {
-			update_option( 'relevanssi_live_search_last_update', time(), 'no' );
-			$this->after_upgrade();
-		}
-	}
-
-	/**
-	 * Updates the plugin version number in the options.
-	 */
-	private function after_upgrade() {
-		update_option( 'relevanssi_live_search_version', $this->version, 'no' );
-	}
-}
 
 /**
  * Handles the search request.
