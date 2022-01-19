@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Widget support.
-require_once dirname( __FILE__ ) . '/includes/class-widget.php';
+require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-widget.php';
 
 /**
  * Class Relevanssi_Live_Search
