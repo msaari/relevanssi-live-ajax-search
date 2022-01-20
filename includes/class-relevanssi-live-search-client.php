@@ -45,24 +45,37 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 * @return array Filtered plugins.
 	 */
 	public function control_active_plugins( array $plugins ) : array {
+		/**
+		 * If true, skip any plugin that's not related to the search.
+		 *
+		 * @param bool Whether to skip the unrelated plugins.
+		 */
 		$applicable = apply_filters( 'relevanssi_live_search_control_plugins_during_search', false );
 
 		if ( ! $applicable || ! is_array( $plugins ) || empty( $plugins ) ) {
 			return $plugins;
 		}
 
-		if ( ! isset( $_REQUEST['rlvquery'] ) || empty( $_REQUEST['rlvquery'] ) ) {
+		if ( ! isset( $_REQUEST['rlvquery'] ) || empty( $_REQUEST['rlvquery'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return $plugins;
 		}
 
-		// The default plugin whitelist is anything SearchWP-related.
+		// The default plugin whitelist is anything Relevanssi-related.
 		$plugin_whitelist = array();
 		foreach ( $plugins as $plugin_slug ) {
-			if ( 0 === strpos( $plugin_slug, 'searchwp' ) ) {
+			if ( 0 === strpos( $plugin_slug, 'relevanssi' ) ) {
 				$plugin_whitelist[] = $plugin_slug;
 			}
 		}
 
+		/**
+		 * Filters the plugin whitelist.
+		 *
+		 * If the plugin filtering is used, this filter hook can be used to
+		 * adjust which plugins are allowed to be used during the search.
+		 *
+		 * @param array $plugin_whitelist The plugin whitelist.
+		 */
 		$active_plugins = array_values( (array) apply_filters( 'relevanssi_live_search_plugin_whitelist', $plugin_whitelist ) );
 
 		return $active_plugins;
@@ -77,35 +90,32 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 * @uses relevanssi_Live_Search_Client::get_posts_per_page() to retrieve the number of results to return
 	 */
 	public function search() {
-		if ( isset( $_REQUEST['rlvquery'] ) && ! empty( $_REQUEST['rlvquery'] ) ) {
-
-			$query = sanitize_text_field( stripslashes( $_REQUEST['rlvquery'] ) );
-
-			$args      = $_POST;
-			$args['s'] = $query;
-			if ( ! isset( $_REQUEST['post_status'] ) ) {
-				$args['post_status'] = 'publish';
-			}
-			if ( ! isset( $_REQUEST['post_type'] ) ) {
-				$args['post_type'] = get_post_types(
-					array(
-						'public'              => true,
-						'exclude_from_search' => false,
-					)
-				);
-			}
-
-			$args['posts_per_page'] = ( isset( $_REQUEST['posts_per_page'] )
-				? intval( $_REQUEST['posts_per_page'] )
-				: $this->get_posts_per_page() );
-
-			$args = apply_filters( 'relevanssi_live_search_query_args', $args );
-
-			$this->show_results( $args );
+		if ( ! isset( $_REQUEST['rlvquery'] ) || empty( $_REQUEST['rlvquery'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			wp_die();
 		}
 
-		// Short circuit to keep the overhead of an admin-ajax.php call to a minimum.
-		die();
+		$query = sanitize_text_field( stripslashes( $_REQUEST['rlvquery'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+
+		$args      = $_POST; // phpcs:ignore WordPress.Security.NonceVerification
+		$args['s'] = $query;
+
+		$args['posts_per_page'] = isset( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
+			? intval( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
+			: $this->get_posts_per_page();
+
+		/**
+		 * Filters the search arguments.
+		 *
+		 * The arguments are later passed to query_posts(), so whatever works
+		 * there is fine here.
+		 *
+		 * @param array $args The search arguments.
+		 */
+		$args = apply_filters( 'relevanssi_live_search_query_args', $args );
+
+		$this->show_results( $args );
+
+		wp_die();
 	}
 
 	/**
