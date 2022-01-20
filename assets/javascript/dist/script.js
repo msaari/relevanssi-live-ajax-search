@@ -735,22 +735,7 @@
     jQuery(document).ready(function () {
     	if (typeof jQuery().relevanssi_live_search == "function") {
     		jQuery('input[data-rlvlive="true"]').relevanssi_live_search();
-
-    		// Gutenberg integration is based on a body class addition because we don't have the
-    		// ability to manipulate the markup as we do with get_search_form().
-    		if (
-    			typeof _RELEVANSSI_LIVE_AJAX_SEARCH_BLOCKS !== "undefined" &&
-    			_RELEVANSSI_LIVE_AJAX_SEARCH_BLOCKS
-    		) {
-    			jQuery("input.wp-block-search__input").each(function () {
-    				// Append data vars.
-    				jQuery(this).attr("data-rlvconfig", _RELEVANSSI_LIVE_AJAX_SEARCH_CONFIG);
-
-    				// Init live search.
-    				jQuery(this).relevanssi_live_search();
-    			});
-    		}
     	}
     });
 
-}());
+})();
