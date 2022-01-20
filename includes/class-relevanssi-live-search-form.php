@@ -89,9 +89,6 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		add_filter( 'render_block', array( $this, 'render_block' ), 999, 2 );
 		add_action( 'wp_footer', array( $this, 'base_styles' ) );
 
-		// Gutenberg integration.
-		add_filter( 'wp_footer', array( $this, 'gutenberg_integration' ) );
-
 		// The configs store all of the various configuration arrays that can
 		// be used at runtime.
 		$this->configs = apply_filters( 'relevanssi_live_search_configs', $this->configs );
@@ -100,12 +97,23 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	/**
 	 * Adds the search parameters to the core/search block.
 	 *
-	 * @param string $block_content The block HTML
+	 * @param string $block_content The block HTML.
+	 * @param array  $block         The block data.
+	 *
+	 * @return string The block HTML with the search parameters added.
 	 */
-	function render_block( $block_content, $block ) {
+	public function render_block( $block_content, $block ) {
 		if ( 'core/search' !== $block['blockName'] ) {
 			return $block_content;
 		}
+		/**
+		 * Prevents hijacking the search form.
+		 *
+		 * If this filter hook returns `false`, Relevanssi Live Ajax Search
+		 * will not add the parameters to the search form.
+		 *
+		 * @param bool If true, take over the search form.
+		 */
 		if ( ! apply_filters( 'relevanssi_live_search_hijack_get_search_form', true ) ) {
 			return $block_content;
 		}
@@ -114,26 +122,6 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 
 		$block_content = str_replace( 'name="s"', 'name="s" data-rlvlive="true" data-rlvconfig="' . esc_attr( $config ) . '"', $block_content );
 		return $block_content;
-	}
-
-
-	/**
-	 * Adds Gutenberg variables.
-	 */
-	public function gutenberg_integration() {
-		if ( apply_filters( 'relevanssi_live_search_hijack_search_form_block', true ) ) {
-			$config = apply_filters( 'relevanssi_live_search_get_search_form_config', 'default' );
-
-			// Allow for block-specific.
-			$config = apply_filters( 'relevanssi_live_search_get_search_form_config_blocks', $config );
-
-			?>
-			<script>
-			var _RELEVANSSI_LIVE_AJAX_SEARCH_BLOCKS = true;
-			var _RELEVANSSI_LIVE_AJAX_SEARCH_CONFIG = '<?php echo esc_js( $config ); ?>';
-			</script>
-			<?php
-		}
 	}
 
 	/**
@@ -155,7 +143,8 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 
 		// If WP is in script debug, or we pass ?script_debug in a URL, set
 		// $debug to true.
-		$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ) || ( isset( $_GET['script_debug'] ) ) ? '' : '.min';
+		$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true )
+			|| ( isset( $_GET['script_debug'] ) ) ? '' : '.min'; // phpcs:ignore WordPress.Security.NonceVerification
 
 		wp_register_script(
 			'relevanssi-live-search-client',
@@ -167,18 +156,13 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 
 		$ajaxurl = admin_url( 'admin-ajax.php' );
 
-		// Allow a direct search (e.g. avoid admin-ajax.php).
-		if ( apply_filters( 'relevanssi_live_search_direct_search', false ) ) {
-			$ajaxurl = trailingslashit( $this->url ) . 'direct.php';
-		}
-
 		// Set up our parameters.
 		$params = array(
 			'ajaxurl'             => esc_url( $ajaxurl ),
 			'origin_id'           => get_queried_object_id(),
 			'config'              => $this->configs,
 			'msg_no_config_found' => __( 'No valid Relevanssi Live Search configuration found!', 'relevanssi-live-ajax-search' ),
-			'aria_instructions'   => __( 'When autocomplete results are available use up and down arrows to review and enter to go to the desired page. Touch device users, explore by touch or with swipe gestures.' , 'relevanssi-live-ajax-search' ),
+			'aria_instructions'   => __( 'When autocomplete results are available use up and down arrows to review and enter to go to the desired page. Touch device users, explore by touch or with swipe gestures.', 'relevanssi-live-ajax-search' ),
 		);
 
 		// We need to JSON encode the configs.
@@ -203,11 +187,12 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 * @uses apply_filters() to allow devs to set the default config to use.
 	 * @uses str_replace() to inject our HTML5 data attributes where we want
 	 * them.
-	 * @uses esc_attr() to escape the search engine and config name.
+	 * @uses esc_attr() to escape the config name.
 	 *
 	 * @return string Markup for the search form.
 	 */
 	public function get_search_form( string $html ) : string {
+		// Documented above.
 		if ( ! apply_filters( 'relevanssi_live_search_hijack_get_search_form', true ) ) {
 			return $html;
 		}
@@ -228,42 +213,48 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 * @uses apply_filters() to allow devs to disable this functionality.
 	 */
 	public function base_styles() {
-		if ( apply_filters( 'relevanssi_live_search_base_styles', true ) ) {
-			?>
-				<style type="text/css">
-					.relevanssi-live-search-results {
-						opacity: 0;
-						transition: opacity .25s ease-in-out;
-						-moz-transition: opacity .25s ease-in-out;
-						-webkit-transition: opacity .25s ease-in-out;
-						height: 0;
-						overflow: hidden;
-						z-index: 9999995; /* Exceed SearchWP Modal Search Form overlay. */
-						position: absolute;
-						display: none;
-					}
-
-					.relevanssi-live-search-results-showing {
-						display: block;
-						opacity: 1;
-						height: auto;
-						overflow: auto;
-					}
-
-					.relevanssi-live-search-no-results {
-						padding: 3em 2em 0;
-						text-align: center;
-					}
-
-					.relevanssi-live-search-no-min-chars:after {
-						content: "<?php echo esc_attr_e( 'Continue typing', 'relevanssi-live-ajax-search' ); ?>";
-						display: block;
-						text-align: center;
-						padding: 2em 2em 0;
-					}
-				</style>
-			<?php
+		/**
+		 * Allows developers to disable the base styles.
+		 *
+		 * @param boolean Whether or not to enable the base styles.
+		 */
+		if ( apply_filters( 'relevanssi_live_search_base_styles', false ) ) {
+			return;
 		}
+		?>
+		<style type="text/css">
+			.relevanssi-live-search-results {
+				opacity: 0;
+				transition: opacity .25s ease-in-out;
+				-moz-transition: opacity .25s ease-in-out;
+				-webkit-transition: opacity .25s ease-in-out;
+				height: 0;
+				overflow: hidden;
+				z-index: 9999995; /* Exceed SearchWP Modal Search Form overlay. */
+				position: absolute;
+				display: none;
+			}
+
+			.relevanssi-live-search-results-showing {
+				display: block;
+				opacity: 1;
+				height: auto;
+				overflow: auto;
+			}
+
+			.relevanssi-live-search-no-results {
+				padding: 3em 2em 0;
+				text-align: center;
+			}
+
+			.relevanssi-live-search-no-min-chars:after {
+				content: "<?php echo esc_attr_e( 'Continue typing', 'relevanssi-live-ajax-search' ); ?>";
+				display: block;
+				text-align: center;
+				padding: 2em 2em 0;
+			}
+		</style>
+		<?php
 	}
 
 }
