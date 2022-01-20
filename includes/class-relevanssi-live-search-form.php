@@ -86,6 +86,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	public function setup() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 		add_filter( 'get_search_form', array( $this, 'get_search_form' ), 999, 1 );
+		add_filter( 'render_block', array( $this, 'render_block' ), 999, 2 );
 		add_action( 'wp_footer', array( $this, 'base_styles' ) );
 
 		// Gutenberg integration.
@@ -95,6 +96,26 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		// be used at runtime.
 		$this->configs = apply_filters( 'relevanssi_live_search_configs', $this->configs );
 	}
+
+	/**
+	 * Adds the search parameters to the core/search block.
+	 *
+	 * @param string $block_content The block HTML
+	 */
+	function render_block( $block_content, $block ) {
+		if ( 'core/search' !== $block['blockName'] ) {
+			return $block_content;
+		}
+		if ( ! apply_filters( 'relevanssi_live_search_hijack_get_search_form', true ) ) {
+			return $block_content;
+		}
+
+		$config = apply_filters( 'relevanssi_live_search_get_search_form_config', 'default' );
+
+		$block_content = str_replace( 'name="s"', 'name="s" data-rlvlive="true" data-rlvconfig="' . esc_attr( $config ) . '"', $block_content );
+		return $block_content;
+	}
+
 
 	/**
 	 * Adds Gutenberg variables.

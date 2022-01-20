@@ -27,6 +27,8 @@ Relevanssi Live Ajax Search drops all SearchWP compatibility. You can use Search
 
 The widget has also been removed. It was unnecessary and outdated.
 
+Relevanssi Live Ajax Search can now take over the Gutenberg `core/search` search form.
+
 = This plugin is on GitHub =
 
 Feel free to open up issues at
