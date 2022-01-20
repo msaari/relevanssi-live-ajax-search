@@ -61,13 +61,6 @@ add_action( 'wp_enqueue_scripts', 'rlv_remove_live_search_theme_css', 20 );`
 
 The first add_filter() removes the base styles that control the live search result position, and the second function removes the actual search result styles.
 
-== Screenshots ==
-
-1. SearchWP Live Ajax Search automatically working in Twenty Fourteen instantly after activating
-2. Search results with default 'theme'
-3. SearchWP Live Ajax Search Widget
-4. SearchWP Live Ajax Search Widget Advanced
-
 == Changelog ==
 
 = 1.0.0 =
