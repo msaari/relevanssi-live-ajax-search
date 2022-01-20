@@ -10,12 +10,14 @@
 		"phpcompatibility/php-compatibility": "^9.3",
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
 		"wp-coding-standards/wpcs": "*",
-		"phpunit/phpunit": "^7"
+		"phpunit/phpunit": "^7",
+		"wpreadme2markdown/wp2md": "^4.0"
 	},
 	"scripts": {
 		"lint": "./vendor/bin/phpcs -p -s",
 		"test": "./vendor/bin/phpunit --testdox",
 		"testMulti": "@test -c multisite.xml",
-		"coverage": "@test --coverage-html coverage"
+		"coverage": "@test --coverage-html coverage",
+		"readme": "./vendor/bin/wp2md < readme.txt > readme.md"
 	}
 }
