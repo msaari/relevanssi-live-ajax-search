@@ -1,37 +1,71 @@
-# SearchWP Live Ajax Search
+# Relevanssi Live Ajax Search
 
-SearchWP Live Ajax Search enables AJAX powered live search for your search forms.
+**Contributors:** msaari \
+**Tags:** search, live, ajax \
+**Requires at least:** 4.9 \
+**Tested up to:** 5.9 \
+**Stable tag:** 1.0.0 \
+**License:** GPLv2 or later \
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
-Designed to be a developer's best friend, SearchWP Live Ajax Search aims to stay out of your way but at the same time allowing you to customize everything about it. It's set up to work with any WordPress theme and uses a template loader to display results. The template based approach allows you to seamlessly customize your SearchWP Live Search implementation without messing with dozens of cluttered options.
+Template powered live search for any WordPress theme. Compatible with Relevanssi search!
 
-## Works best with [SearchWP](https://searchwp.com/?utm_source=github&utm_medium=link&utm_content=readme&utm_campaign=liveajaxsearch) (but SearchWP is not necessary)
+## Description
 
-SearchWP Live Ajax Search *is best utilized* in conjunction with [SearchWP](https://searchwp.com/?utm_source=github&utm_medium=link&utm_content=readme&utm_campaign=liveajaxsearch), but **it is not required**. If SearchWP is installed and activated, SearchWP Live Ajax Search can be customized to use any of your search engines *per search form*.
+Relevanssi Live Ajax Search enables ajax live search for your search forms. It won't swamp you with settings, and generally, Relevanssi Live Ajax Search works without any modifications necessary. If you want to customize it, you have complete control over how it works and what it does.
 
-### Customization
+Relevanssi Live Ajax Search displays the search results using templates. You can easily override the default templates from your theme to make the results look the way you want them to look.
 
-You can customize the implementation of SearchWP Live Ajax Search to a great degree, including any number of developer-defined configurations. The results are based on a template loader, allowing SearchWP Live Ajax Search to stay out of your way and letting you write the results template as you would any other WordPress theme file.
+### Works best with Relevanssi
 
-*Everything* is powered by adding a single HTML5 data attribute (`data-swplive="true"`) to the input field of your search form. This happens automagically out of the box for any search forms generated from `get_search_form()`.
+Relevanssi Live Ajax Search only provides you with live search results. To get really good results, use [Relevanssi](https://wordpress.org/plugins/relevanssi/), [Relevanssi Premium](https://www.relevanssi.com/buy-premium/) or [Relevanssi Light](https://wordpress.org/plugins/relevanssi-light/). Relevanssi Live Ajax Search automatically uses Relevanssi to power the search results if Relevanssi is installed and active. However, you don't need Relevanssi; Relevanssi Live Ajax Search also works with the default WP search.
 
-## Widget support
+### Changes from SearchWP Live Ajax Search
 
-SearchWP Live Ajax Search ships with a Widget allowing you to insert live search forms wherever you'd like.
+Relevanssi Live Ajax Search is a fork of [SearchWP Live Ajax Search](https://wordpress.org/plugins/searchwp-live-ajax-search/). I forked it from version 1.6.1 because it looked like SearchWP Live Ajax Search wasn't getting updates anymore. I also wanted to improve the Relevanssi compatibility.
 
-## Installation and Activation
+Relevanssi Live Ajax Search drops all SearchWP compatibility. You can use SearchWP Live Ajax Search, which has built-in SearchWP support.
 
-1. Download the plugin and extract the files
-1. Upload `searchwp-live-search` to your `~/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Optionally customize the configuration: [full documentation](https://searchwp.com/docs/extensions/live-search/)
-1. Optionally customize the results template: [full documentation](https://searchwp.com/docs/extensions/live-search/)
+The widget has also been removed. It was unnecessary and outdated.
 
-## Developer notes
+Relevanssi Live Ajax Search can now take over the Gutenberg `core/search` search form.
 
-Please see the [documentation](https://searchwp.com/extensions/live-search/?utm_source=github&utm_medium=link&utm_content=readme) to read more about the plugin.
+### This plugin is on GitHub
 
-There is a build process for all JavaScript bundles contained within a single command:
+Feel free to open up issues at
+[https://github.com/msaari/relevanssi-live-ajax-search](https://github.com/msaari/relevanssi-live-ajax-search).
 
-`npm run watch`
+## Installation
 
-This will execute all necessary processes that watch for file changes and subsequently generate all necessary code bundles.
+1. Install the plugin from the WordPress plugin screen.
+1. Activate the plugin.
+1. That's it! Most of the time, that's all you need.
+
+If Relevanssi Live Ajax Search does not automatically attach itself to your search form, you can enable it by adding a single HTML5 data attribute (<code>data-rlvlive="true"</code>) to the input field of your search form.
+
+## Frequently Asked Questions
+
+### How do I create a custom search results template
+
+Relevanssi Live Ajax Search uses a template loader, making it easy to replace the search results. There is a `templates` folder in the plugin folder, which includes `search-results.php`. This file is the template used to output search results. To customize the search results:
+
+1. Create a folder called `relevanssi-live-ajax-search` in your theme directory.
+1. Copy the `search-results.php` file into the new folder.
+1. Relevanssi Live Ajax Search will now use that file to show the results.
+
+If you want to override the default CSS styles, you can remove them this way:
+
+`add_filter( 'relevanssi_live_search_base_styles', '\_\_return_false' );
+
+function rlv_remove_live_search_theme_css() {
+wp_dequeue_style( 'relevanssi-live-search' );
+}
+add_action( 'wp_enqueue_scripts', 'rlv_remove_live_search_theme_css', 20 );`
+
+The first add_filter() removes the base styles that control the live search result position, and the second function removes the actual search result styles.
+
+## Changelog
+
+### 1.0.0
+
+- First version based on the version 1.6.1 of SearchWP Live Ajax Search.
