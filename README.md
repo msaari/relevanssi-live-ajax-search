@@ -55,14 +55,13 @@ Relevanssi Live Ajax Search uses a template loader, making it easy to replace th
 
 If you want to override the default CSS styles, you can remove them this way:
 
-`add_filter( 'relevanssi_live_search_base_styles', '\_\_return_false' );
+`add_filter( 'relevanssi_live_search_base_styles', '__return_false' );`
 
-function rlv_remove_live_search_theme_css() {
-wp_dequeue_style( 'relevanssi-live-search' );
-}
-add_action( 'wp_enqueue_scripts', 'rlv_remove_live_search_theme_css', 20 );`
+This filter hook removes the base styles that control the live search result position.
 
-The first add_filter() removes the base styles that control the live search result position, and the second function removes the actual search result styles.
+`wp_dequeue_style( 'relevanssi-live-search' );`
+
+This removes the actual search result styles.
 
 ## Changelog
 
