@@ -52,7 +52,7 @@ class Relevanssi_Live_Search {
 	 * The class constructor.
 	 */
 	public function __construct() {
-		$this->directory_name = dirname( __FILE__ );
+		$this->directory_name = dirname( dirname( __FILE__ ) );
 		$this->url            = plugins_url( 'relevanssi-live-ajax-search', $this->directory_name );
 
 		$this->upgrade();
