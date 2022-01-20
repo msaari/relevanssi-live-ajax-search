@@ -41,9 +41,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Widget support.
 require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search.php';
-require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-widget.php';
+require_once dirname( __FILE__ ) . '/includes/block-search.php';
 
 /**
  * Handles the search request.
