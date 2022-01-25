@@ -18,7 +18,8 @@
 	opacity: 0.3;
 }
 
-.relevanssi-live-search-result p {
+.relevanssi-live-search-result p,
+.relevanssi-live-search-result-status p {
 	font-size: 0.9em;
 	padding: 1em;
 	margin: 0;
