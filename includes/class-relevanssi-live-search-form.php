@@ -120,7 +120,8 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 
 		$config = apply_filters( 'relevanssi_live_search_get_search_form_config', 'default' );
 
-		$block_content = str_replace( 'name="s"', 'name="s" data-rlvlive="true" data-rlvconfig="' . esc_attr( $config ) . '"', $block_content );
+		$block_content = str_replace( 'name="s"', 'name="s" data-rlvlive="true" data-rlvparentel="#rlvlive" data-rlvconfig="' . esc_attr( $config ) . '"', $block_content );
+		$block_content = str_replace( '</form>', '<div id="rlvlive"></div></form>', $block_content );
 		return $block_content;
 	}
 
