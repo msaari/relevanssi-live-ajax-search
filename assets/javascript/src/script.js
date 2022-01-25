@@ -135,7 +135,7 @@ import { Spinner } from "spin.js"
 						) {
 							self.current_request.abort()
 						}
-						if (!jQuery.trim(self.input_el.val()).length) {
+						if (!self.input_el.val().trim().length) {
 							self.destroy_results()
 						}
 						// if the user typed, show the results wrapper and spinner
@@ -150,7 +150,7 @@ import { Spinner } from "spin.js"
 						if (
 							self.has_results &&
 							!self.spinner_showing &&
-							self.last_string !== jQuery.trim(self.input_el.val())
+							self.last_string !== self.input_el.val().trim()
 						) {
 							self.results_el.empty()
 							self.show_spinner()
