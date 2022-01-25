@@ -263,7 +263,7 @@
 
     				// set up and position the results container
     				var results_el_html =
-    					'<div aria-expanded="false" class="relevanssi-live-search-results" id="' +
+    					'<div aria-expanded="false" aria-live="polite" class="relevanssi-live-search-results" id="' +
     					this.results_id +
     					'" role="listbox" tabindex="0"></div>';
 
@@ -327,7 +327,7 @@
     						) {
     							self.current_request.abort();
     						}
-    						if (!jQuery.trim(self.input_el.val()).length) {
+    						if (!self.input_el.val().trim().length) {
     							self.destroy_results();
     						}
     						// if the user typed, show the results wrapper and spinner
@@ -342,7 +342,7 @@
     						if (
     							self.has_results &&
     							!self.spinner_showing &&
-    							self.last_string !== jQuery.trim(self.input_el.val())
+    							self.last_string !== self.input_el.val().trim()
     						) {
     							self.results_el.empty();
     							self.show_spinner();
@@ -738,4 +738,4 @@
     	}
     });
 
-}());
+})();
