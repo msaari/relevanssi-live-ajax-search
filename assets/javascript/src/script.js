@@ -71,7 +71,7 @@ import { Spinner } from "spin.js"
 
 				// set up and position the results container
 				var results_el_html =
-					'<div aria-expanded="false" class="relevanssi-live-search-results" id="' +
+					'<div aria-expanded="false" aria-live="polite" class="relevanssi-live-search-results" id="' +
 					this.results_id +
 					'" role="listbox" tabindex="0"></div>'
 
