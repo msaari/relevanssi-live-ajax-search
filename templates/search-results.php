@@ -33,8 +33,22 @@
 			</a></p>
 		</div>
 	<?php endwhile; ?>
+	<?php
+	global $rlv_live_search_get_posts_per_page;
+	?>
+	<div class="relevanssi-live-search-result-status" role="status">
+		<?php // Translators: %s is the number of results found. ?>
+		<?php // Translators: %s is the number of results found. ?>
+		<p><?php printf( esc_html( _n( '%d post found.', '%d posts found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) ); ?>
+		<?php
+		if ( $wp_query->found_posts > $rlv_live_search_get_posts_per_page ) :
+			?>
+			<a href="#" onclick="this.closest('form').submit();return false;">See all results</a>
+		<?php endif; ?>
+		</p>
+	</div>
 <?php else : ?>
-	<p class="relevanssi-live-search-no-results" role="option">
+	<p class="relevanssi-live-search-no-results" role="status">
 		<em><?php esc_html_e( 'No results found.', 'relevanssi-live-ajax-search' ); ?></em>
 	</p>
 <?php endif; ?>

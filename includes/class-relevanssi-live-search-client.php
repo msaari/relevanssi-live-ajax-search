@@ -148,6 +148,9 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		// Output the results using the results template.
 		$results = new Relevanssi_Live_Search_Template();
 
+		global $rlv_live_search_get_posts_per_page;
+		$rlv_live_search_get_posts_per_page = $this->get_posts_per_page();
+
 		$results->get_template_part( 'search-results' );
 	}
 
