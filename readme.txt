@@ -66,3 +66,8 @@ This removes the actual search result styles.
 
 = 1.0.0 =
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+* First release, based on SearchWP Live Ajax Search 1.6.1.
