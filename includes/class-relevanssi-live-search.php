@@ -35,13 +35,6 @@ class Relevanssi_Live_Search {
 	public $url;
 
 	/**
-	 * Plugin version number.
-	 *
-	 * @var string $version
-	 */
-	public $version = '1.6.1';
-
-	/**
 	 * The search results.
 	 *
 	 * @var array $results
@@ -55,33 +48,13 @@ class Relevanssi_Live_Search {
 		$this->directory_name = dirname( dirname( __FILE__ ) );
 		$this->url            = plugins_url( 'relevanssi-live-ajax-search', $this->directory_name );
 
-		$this->upgrade();
-	}
-
-	/**
-	 * Updates the plugin last updated option.
-	 */
-	private function upgrade() {
-		$last_version = get_option( 'relevanssi_live_search_version' );
-
-		if ( false === $last_version ) {
-			$last_version = 0;
-		}
-
-		if ( ! version_compare( $last_version, $this->version, '<' ) ) {
-			return;
-		}
-
-		if ( version_compare( $last_version, '1.6.1', '<' ) ) {
-			update_option( 'relevanssi_live_search_last_update', time(), 'no' );
-			$this->after_upgrade();
-		}
-	}
-
-	/**
-	 * Updates the plugin version number in the options.
-	 */
-	private function after_upgrade() {
-		update_option( 'relevanssi_live_search_version', $this->version, 'no' );
+		// Cleaning up SearchWP Live Ajax Search legacy.
+		add_action(
+			'admin_init',
+			function() {
+				delete_option( 'relevanssi_live_search_last_update' );
+				delete_option( 'relevanssi_live_search_version' );
+			}
+		);
 	}
 }
