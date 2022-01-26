@@ -35,6 +35,13 @@ class Relevanssi_Live_Search {
 	public $url;
 
 	/**
+	 * Plugin version number.
+	 *
+	 * @var string $version
+	 */
+	public $version = '1.0.0';
+
+	/**
 	 * The search results.
 	 *
 	 * @var array $results
