@@ -26,6 +26,11 @@
 	border-bottom: 1px solid rgba(30, 30, 30, 0.1);
 }
 
+.relevanssi-live-search-result-status p {
+	font-size: 0.8em;
+	padding: 0 1em;
+}
+
 .relevanssi-live-search-result--focused {
 	background: #ddd;
 }
