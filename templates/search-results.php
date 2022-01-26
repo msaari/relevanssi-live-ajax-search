@@ -38,7 +38,7 @@
 	 * added after the results container. Default is 'before'. Any other value
 	 * will make the status element disappear.
 	 */
-	$status_location = apply_filters( 'relevanssi_live_ajax_search_status_location', 'before' );
+	$status_location = apply_filters( 'relevanssi_live_search_status_location', 'before' );
 
 	if ( ! in_array( $status_location, array( 'before', 'after' ), true ) ) {
 		$status_location = 'before';
@@ -64,7 +64,7 @@
 		<?php
 	endwhile;
 
-	if ( 'before' === $status_location ) {
+	if ( 'after' === $status_location ) {
 		// Already escaped.
 		echo $status_element; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
