@@ -26,7 +26,7 @@
 	<?php
 	$status_element = '<div class="relevanssi-live-search-result-status" role="status" aria-live="polite"><p>';
 	// Translators: %s is the number of results found.
-	$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) );
+	$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi-live-ajax-search' ) ), intval( $wp_query->found_posts ) );
 	$status_element .= '</p></div>';
 
 	/**
@@ -44,7 +44,7 @@
 		$status_location = 'before';
 		$status_element  = '<p class="screen-reader-text" role="status" aria-live="polite">';
 		// Translators: %s is the number of results found.
-		$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) );
+		$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi-live-ajax-search' ) ), intval( $wp_query->found_posts ) );
 		$status_element .= '</p>';
 	}
 
@@ -73,4 +73,9 @@
 	<p class="relevanssi-live-search-no-results" role="status">
 		<?php esc_html_e( 'No results found.', 'relevanssi-live-ajax-search' ); ?>
 	</p>
+		<?php
+		if ( function_exists( 'relevanssi_didyoumean' ) ) {
+			relevanssi_didyoumean( $wp_query->query_vars['s'], '<p class="relevanssi-live-search-didyoumean" role="status">' . __( 'Did you mean', 'relevanssi-live-ajax-search' ) . ': ', '</p>' );
+		}
+		?>
 <?php endif; ?>

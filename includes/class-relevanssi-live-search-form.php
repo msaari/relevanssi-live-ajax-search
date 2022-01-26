@@ -280,7 +280,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 				overflow: auto;
 			}
 
-			.relevanssi-live-search-no-results {
+			.relevanssi-live-search-no-results, .relevanssi-live-search-didyoumean {
 				padding: 0 1em;
 			}
 
