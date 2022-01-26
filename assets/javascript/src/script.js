@@ -223,7 +223,7 @@ import { Spinner } from "spin.js"
 						jQuery(document).off("keyup.relevanssi_a11y")
 
 						// Get back the focus on input search.
-						$input.focus()
+						$input.trigger("focus")
 
 						jQuery(document).trigger("relevanssi_live_escape_results")
 
@@ -241,7 +241,7 @@ import { Spinner } from "spin.js"
 								.addClass(focused_class)
 								.attr("aria-selected", "true")
 								.find("a")
-								.focus()
+								.trigger("focus")
 						} else {
 							$current.removeClass(focused_class).attr("aria-selected", "false")
 							$results
@@ -249,7 +249,7 @@ import { Spinner } from "spin.js"
 								.addClass(focused_class)
 								.attr("aria-selected", "true")
 								.find("a")
-								.focus()
+								.trigger("focus")
 						}
 						jQuery(document).trigger("relevanssi_live_key_arrowdown_pressed")
 					}
@@ -265,7 +265,7 @@ import { Spinner } from "spin.js"
 								.addClass(focused_class)
 								.attr("aria-selected", "true")
 								.find("a")
-								.focus()
+								.trigger("focus")
 						} else {
 							$currentItem
 								.removeClass(focused_class)
@@ -275,7 +275,7 @@ import { Spinner } from "spin.js"
 								.addClass(focused_class)
 								.attr("aria-selected", "true")
 								.find("a")
-								.focus()
+								.trigger("focus")
 						}
 						jQuery(document).trigger("relevanssi_live_key_arrowup_pressed")
 					}
