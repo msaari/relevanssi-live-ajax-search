@@ -92,7 +92,7 @@ import { Spinner } from "spin.js"
 
 				this.results_el = jQuery("#" + this.results_id)
 				this.position_results()
-				jQuery(window).resize(function () {
+				jQuery(window).on("resize", function () {
 					self.position_results()
 				})
 
@@ -123,7 +123,7 @@ import { Spinner } from "spin.js"
 
 				// bind to keyup
 				$input
-					.keyup(function (e) {
+					.on("keyup", function (e) {
 						if (jQuery.inArray(e.keyCode, self.a11y_keys) > -1) {
 							return
 						}
@@ -163,14 +163,14 @@ import { Spinner } from "spin.js"
 							self.results_el.addClass("relevanssi-live-search-no-min-chars")
 						}
 					})
-					.keyup(jQuery.proxy(this.maybe_search, this))
+					.on("keyup", jQuery.proxy(this.maybe_search, this))
 
 				// destroy the results when input focus is lost
 				if (
 					this.config.results_destroy_on_blur ||
 					typeof this.config.results_destroy_on_blur === "undefined"
 				) {
-					jQuery("html").click(function (e) {
+					jQuery("html").on("click", function (e) {
 						// Only destroy the results if the click was placed outside the results element.
 						if (
 							!jQuery(e.target).parents(".relevanssi-live-search-results")
@@ -180,7 +180,7 @@ import { Spinner } from "spin.js"
 						}
 					})
 				}
-				$input.click(function (e) {
+				$input.on("click", function (e) {
 					e.stopPropagation()
 				})
 			}
