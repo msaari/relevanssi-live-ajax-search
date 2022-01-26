@@ -3,7 +3,7 @@ Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
 Tested up to: 5.9
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,11 +71,15 @@ This removes the actual search result styles.
 * The search results now show the total number of results found. These changes are in the default template, so if you're using a custom template, check the default template.
 * New filter hook `relevanssi_live_search_status_location` controls where the total is displayed ('before', 'after' or nowhere for any other value, in which case only the screen reader status is added).
 * New filter hook `relevanssi_live_search_add_result_div` controls whether an extra div is added for the results.
+* If Relevanssi is available, searches that find no results show 'Did you mean' suggestions.
 
 = 1.0.0 =
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+* Accessibility improvements and new features.
 
 = 1.0.0 =
 * First release, based on SearchWP Live Ajax Search 1.6.1.
