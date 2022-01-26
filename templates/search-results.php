@@ -41,6 +41,7 @@
 	$status_location = apply_filters( 'relevanssi_live_search_status_location', 'before' );
 
 	if ( ! in_array( $status_location, array( 'before', 'after' ), true ) ) {
+		// No status element is displayed. Still add one for screen readers.
 		$status_location = 'before';
 		$status_element  = '<p class="screen-reader-text" role="status" aria-live="polite">';
 		// Translators: %s is the number of results found.
@@ -75,7 +76,12 @@
 	</p>
 		<?php
 		if ( function_exists( 'relevanssi_didyoumean' ) ) {
-			relevanssi_didyoumean( $wp_query->query_vars['s'], '<p class="relevanssi-live-search-didyoumean" role="status">' . __( 'Did you mean', 'relevanssi-live-ajax-search' ) . ': ', '</p>' );
+			relevanssi_didyoumean(
+				$wp_query->query_vars['s'],
+				'<p class="relevanssi-live-search-didyoumean" role="status">'
+					. __( 'Did you mean', 'relevanssi-live-ajax-search' ) . ': ',
+				'</p>'
+			);
 		}
 		?>
 <?php endif; ?>
