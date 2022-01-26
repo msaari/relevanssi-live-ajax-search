@@ -64,6 +64,14 @@ This removes the actual search result styles.
 
 == Changelog ==
 
+= 1.1.0 =
+* Improved accessibility: screen readers users get better notifications of what's happening.
+* Improved accessibility: the default location for the search results is now the next tab stop from the search form, within div#rlvlive_1.
+* Removes JQuery migration deprecation warnings.
+* The search results now show the total number of results found. These changes are in the default template, so if you're using a custom template, check the default template.
+* New filter hook `relevanssi_live_search_status_location` controls where the total is displayed ('before', 'after' or nowhere for any other value, in which case only the screen reader status is added).
+* New filter hook `relevanssi_live_search_add_result_div` controls whether an extra div is added for the results.
+
 = 1.0.0 =
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
