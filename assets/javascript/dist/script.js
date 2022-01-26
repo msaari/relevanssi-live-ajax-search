@@ -284,7 +284,7 @@
 
     				this.results_el = jQuery("#" + this.results_id);
     				this.position_results();
-    				jQuery(window).resize(function () {
+    				jQuery(window).on("resize", function () {
     					self.position_results();
     				});
 
@@ -315,7 +315,7 @@
 
     				// bind to keyup
     				$input
-    					.keyup(function (e) {
+    					.on("keyup", function (e) {
     						if (jQuery.inArray(e.keyCode, self.a11y_keys) > -1) {
     							return
     						}
@@ -345,6 +345,11 @@
     							self.last_string !== self.input_el.val().trim()
     						) {
     							self.results_el.empty();
+    							self.results_el.html(
+    								"<p class='screen-reader-text' role='status' aria-live='polite'>" +
+    									relevanssi_live_search_params.msg_loading_results +
+    									"</p>"
+    							);
     							self.show_spinner();
     						}
 
@@ -355,14 +360,14 @@
     							self.results_el.addClass("relevanssi-live-search-no-min-chars");
     						}
     					})
-    					.keyup(jQuery.proxy(this.maybe_search, this));
+    					.on("keyup", jQuery.proxy(this.maybe_search, this));
 
     				// destroy the results when input focus is lost
     				if (
     					this.config.results_destroy_on_blur ||
     					typeof this.config.results_destroy_on_blur === "undefined"
     				) {
-    					jQuery("html").click(function (e) {
+    					jQuery("html").on("click", function (e) {
     						// Only destroy the results if the click was placed outside the results element.
     						if (
     							!jQuery(e.target).parents(".relevanssi-live-search-results")
@@ -372,7 +377,7 @@
     						}
     					});
     				}
-    				$input.click(function (e) {
+    				$input.on("click", function (e) {
     					e.stopPropagation();
     				});
     			}
@@ -410,7 +415,7 @@
     						jQuery(document).off("keyup.relevanssi_a11y");
 
     						// Get back the focus on input search.
-    						$input.focus();
+    						$input.trigger("focus");
 
     						jQuery(document).trigger("relevanssi_live_escape_results");
 
@@ -428,7 +433,7 @@
     								.addClass(focused_class)
     								.attr("aria-selected", "true")
     								.find("a")
-    								.focus();
+    								.trigger("focus");
     						} else {
     							$current.removeClass(focused_class).attr("aria-selected", "false");
     							$results
@@ -436,7 +441,7 @@
     								.addClass(focused_class)
     								.attr("aria-selected", "true")
     								.find("a")
-    								.focus();
+    								.trigger("focus");
     						}
     						jQuery(document).trigger("relevanssi_live_key_arrowdown_pressed");
     					}
@@ -452,7 +457,7 @@
     								.addClass(focused_class)
     								.attr("aria-selected", "true")
     								.find("a")
-    								.focus();
+    								.trigger("focus");
     						} else {
     							$currentItem
     								.removeClass(focused_class)
@@ -462,7 +467,7 @@
     								.addClass(focused_class)
     								.attr("aria-selected", "true")
     								.find("a")
-    								.focus();
+    								.trigger("focus");
     						}
     						jQuery(document).trigger("relevanssi_live_key_arrowup_pressed");
     					}
