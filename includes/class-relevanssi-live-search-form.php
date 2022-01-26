@@ -245,8 +245,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 			}
 
 			.relevanssi-live-search-no-results {
-				padding: 3em 2em 0;
-				text-align: center;
+				padding: 0 1em;
 			}
 
 			.relevanssi-live-search-no-min-chars:after {
