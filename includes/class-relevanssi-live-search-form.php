@@ -163,6 +163,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 			'origin_id'           => get_queried_object_id(),
 			'config'              => $this->configs,
 			'msg_no_config_found' => __( 'No valid Relevanssi Live Search configuration found!', 'relevanssi-live-ajax-search' ),
+			'msg_loading_results' => __( 'Loading search results.', 'relevanssi-live-ajax-search' ),
 			'aria_instructions'   => __( 'When autocomplete results are available use up and down arrows to review and enter to go to the desired page. Touch device users, explore by touch or with swipe gestures.', 'relevanssi-live-ajax-search' ),
 		);
 

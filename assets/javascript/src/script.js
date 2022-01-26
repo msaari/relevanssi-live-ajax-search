@@ -153,6 +153,11 @@ import { Spinner } from "spin.js"
 							self.last_string !== self.input_el.val().trim()
 						) {
 							self.results_el.empty()
+							self.results_el.html(
+								"<p class='screen-reader-text' role='status' aria-live='polite'>" +
+									relevanssi_live_search_params.msg_loading_results +
+									"</p>"
+							)
 							self.show_spinner()
 						}
 
