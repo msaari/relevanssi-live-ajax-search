@@ -73,6 +73,23 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	);
 
 	/**
+	 * The form counter.
+	 *
+	 * @var int The search form counter.
+	 */
+	private $form_counter = 0;
+
+	/**
+	 * Returns the next form number and increments the counter.
+	 *
+	 * @return int The search form counter.
+	 */
+	public function get_form_number() {
+		$this->form_counter++;
+		return $this->form_counter;
+	}
+
+	/**
 	 * Equivalent of __construct() - implement our hooks
 	 *
 	 * @since 1.0
@@ -92,37 +109,6 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		// The configs store all of the various configuration arrays that can
 		// be used at runtime.
 		$this->configs = apply_filters( 'relevanssi_live_search_configs', $this->configs );
-	}
-
-	/**
-	 * Adds the search parameters to the core/search block.
-	 *
-	 * @param string $block_content The block HTML.
-	 * @param array  $block         The block data.
-	 *
-	 * @return string The block HTML with the search parameters added.
-	 */
-	public function render_block( $block_content, $block ) {
-		if ( 'core/search' !== $block['blockName'] ) {
-			return $block_content;
-		}
-		/**
-		 * Prevents hijacking the search form.
-		 *
-		 * If this filter hook returns `false`, Relevanssi Live Ajax Search
-		 * will not add the parameters to the search form.
-		 *
-		 * @param bool If true, take over the search form.
-		 */
-		if ( ! apply_filters( 'relevanssi_live_search_hijack_get_search_form', true ) ) {
-			return $block_content;
-		}
-
-		$config = apply_filters( 'relevanssi_live_search_get_search_form_config', 'default' );
-
-		$block_content = str_replace( 'name="s"', 'name="s" data-rlvlive="true" data-rlvparentel="#rlvlive" data-rlvconfig="' . esc_attr( $config ) . '"', $block_content );
-		$block_content = str_replace( '</form>', '<div id="rlvlive"></div></form>', $block_content );
-		return $block_content;
 	}
 
 	/**
@@ -185,23 +171,73 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 *
 	 * @param string $html The generated markup for the search form.
 	 *
-	 * @uses apply_filters() to allow devs to disable this functionality.
-	 * @uses apply_filters() to allow devs to set the default config to use.
-	 * @uses str_replace() to inject our HTML5 data attributes where we want
-	 * them.
-	 * @uses esc_attr() to escape the config name.
-	 *
 	 * @return string Markup for the search form.
 	 */
 	public function get_search_form( string $html ) : string {
-		// Documented above.
+		$html = $this->modify_search_form( $html );
+		return $html;
+	}
+
+	/**
+	 * Adds the search parameters to the core/search block.
+	 *
+	 * @param string $block_content The block HTML.
+	 * @param array  $block         The block data.
+	 *
+	 * @return string The block HTML with the search parameters added.
+	 */
+	public function render_block( $block_content, $block ) {
+		if ( 'core/search' !== $block['blockName'] ) {
+			return $block_content;
+		}
+		$block_content = $this->modify_search_form( $block_content );
+		return $block_content;
+	}
+
+	/**
+	 * Modifies the search form to add the necessary attributes.
+	 *
+	 * @param string $html The generated markup for the search form.
+	 */
+	private function modify_search_form( string $html ) : string {
+		/**
+		 * Prevents hijacking the search form.
+		 *
+		 * If this filter hook returns `false`, Relevanssi Live Ajax Search
+		 * will not add the parameters to the search form.
+		 *
+		 * @param bool If true, take over the search form.
+		 */
 		if ( ! apply_filters( 'relevanssi_live_search_hijack_get_search_form', true ) ) {
 			return $html;
 		}
 
+		/**
+		 * Filters the default config name.
+		 *
+		 * @param string The form config name. Default 'default'.
+		 */
 		$config = apply_filters( 'relevanssi_live_search_get_search_form_config', 'default' );
-		// We're going to use 'name="s"' as our anchor for replacement.
-		$html = str_replace( 'name="s"', 'name="s" data-rlvlive="true" data-rlvconfig="' . esc_attr( $config ) . '"', $html );
+
+		/**
+		 * Controls whether a separate result div is added.
+		 *
+		 * By default Relevanssi Live Ajax Search adds a separate result div
+		 * inside the form so that the search results are accessible with a
+		 * tab press. If this filter returns false, the result div will not be
+		 * added and the rlvparentel data attribute will not be set.
+		 *
+		 * @param bool If true, add the result div. Default true.
+		 */
+		$add_result_div = apply_filters( 'relevanssi_live_search_add_result_div', true );
+
+		$form_number = $this->get_form_number();
+		$form_id     = 'rlvlive_' . $form_number;
+		$parentel    = $add_result_div ? 'data-rlvparentel="#' . $form_id . '"' : '';
+		$html        = str_replace( 'name="s"', 'name="s" data-rlvlive="true" ' . $parentel . ' data-rlvconfig="' . esc_attr( $config ) . '"', $html );
+		if ( $add_result_div ) {
+			$html = str_replace( '</form>', '<div id="' . $form_id . '"></div></form>', $html );
+		}
 
 		return $html;
 	}
