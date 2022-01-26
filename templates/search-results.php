@@ -24,6 +24,13 @@
 
 <?php if ( have_posts() ) : ?>
 	<?php
+	global $rlv_live_search_get_posts_per_page;
+	?>
+	<div class="relevanssi-live-search-result-status" role="status" aria-live="polite">
+		<?php // Translators: %s is the number of results found. ?>
+		<p><?php printf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) ); ?></p>
+	</div>
+	<?php
 	while ( have_posts() ) :
 		the_post();
 		?>
@@ -33,24 +40,8 @@
 			</a></p>
 		</div>
 	<?php endwhile; ?>
-	<?php
-	global $rlv_live_search_get_posts_per_page;
-	?>
-	<div class="relevanssi-live-search-result-status" role="status">
-		<?php
-		$more_posts = $wp_query->found_posts - $rlv_live_search_get_posts_per_page;
-		?>
-		<?php // Translators: %s is the number of results found. ?>
-		<p><?php printf( esc_html( _n( '%d more post found.', '%d more posts found.', $more_posts, 'relevanssi' ) ), intval( $more_posts ) ); ?>
-		<?php
-		if ( $more_posts > 0 ) :
-			?>
-			<a href="#" onclick="this.closest('form').submit();return false;">See all results</a>.
-		<?php endif; ?>
-		</p>
-	</div>
 <?php else : ?>
 	<p class="relevanssi-live-search-no-results" role="status">
-		<em><?php esc_html_e( 'No results found.', 'relevanssi-live-ajax-search' ); ?></em>
+		<?php esc_html_e( 'No results found.', 'relevanssi-live-ajax-search' ); ?>
 	</p>
 <?php endif; ?>
