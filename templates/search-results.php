@@ -24,13 +24,35 @@
 
 <?php if ( have_posts() ) : ?>
 	<?php
-	global $rlv_live_search_get_posts_per_page;
-	?>
-	<div class="relevanssi-live-search-result-status" role="status" aria-live="polite">
-		<?php // Translators: %s is the number of results found. ?>
-		<p><?php printf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) ); ?></p>
-	</div>
-	<?php
+	$status_element = '<div class="relevanssi-live-search-result-status" role="status" aria-live="polite"><p>';
+	// Translators: %s is the number of results found.
+	$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) );
+	$status_element .= '</p></div>';
+
+	/**
+	 * Filters the status element location.
+	 *
+	 * @param string The location. Possible values are 'before' and 'after'. If
+	 * the value is 'before', the status element will be added before the
+	 * results container. If the value is 'after', the status element will be
+	 * added after the results container. Default is 'before'. Any other value
+	 * will make the status element disappear.
+	 */
+	$status_location = apply_filters( 'relevanssi_live_ajax_search_status_location', 'before' );
+
+	if ( ! in_array( $status_location, array( 'before', 'after' ), true ) ) {
+		$status_location = 'before';
+		$status_element  = '<p class="screen-reader-text" role="status" aria-live="polite">';
+		// Translators: %s is the number of results found.
+		$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi' ) ), intval( $wp_query->found_posts ) );
+		$status_element .= '</p>';
+	}
+
+	if ( 'before' === $status_location ) {
+		// Already escaped.
+		echo $status_element; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
 	while ( have_posts() ) :
 		the_post();
 		?>
@@ -39,8 +61,15 @@
 				<?php the_title(); ?> &raquo;
 			</a></p>
 		</div>
-	<?php endwhile; ?>
-<?php else : ?>
+		<?php
+	endwhile;
+
+	if ( 'before' === $status_location ) {
+		// Already escaped.
+		echo $status_element; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+	?>
+	<?php else : ?>
 	<p class="relevanssi-live-search-no-results" role="status">
 		<?php esc_html_e( 'No results found.', 'relevanssi-live-ajax-search' ); ?>
 	</p>
