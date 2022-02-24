@@ -11,7 +11,8 @@
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
 		"wp-coding-standards/wpcs": "*",
 		"phpunit/phpunit": "^7",
-		"wpreadme2markdown/wp2md": "^4.0"
+		"wpreadme2markdown/wp2md": "^4.0",
+		"phpcompatibility/phpcompatibility-paragonie": "*"
 	},
 	"scripts": {
 		"lint": "./vendor/bin/phpcs -p -s",
