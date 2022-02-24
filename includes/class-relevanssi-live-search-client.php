@@ -137,18 +137,27 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 
 		$args['relevanssi'] = true;
 
-		// We're using query_posts() here because we want to prep the entire
-		// environment for our template loader, allowing the developer to
-		// utilize everything they normally would in a theme template (and
-		// reducing support requests).
-		query_posts( $args ); // phpcs:ignore WordPress.WP.DiscouragedFunctions
+		$mode = apply_filters( 'relevanssi_live_search_mode', 'query_posts' );
+
+		if ( 'query_posts' === $mode ) {
+			// We're using query_posts() here because we want to prep the entire
+			// environment for our template loader, allowing the developer to
+			// utilize everything they normally would in a theme template (and
+			// reducing support requests).
+			query_posts( $args ); // phpcs:ignore WordPress.WP.DiscouragedFunctions
+			$template = 'search-results';
+		} else {
+			global $relevanssi_query;
+			$relevanssi_query = new WP_Query( $args );
+			$template         = 'search-results-query';
+		}
 
 		do_action( 'relevanssi_live_search_alter_results', $args );
 
 		// Output the results using the results template.
 		$results = new Relevanssi_Live_Search_Template();
 
-		$results->get_template_part( 'search-results' );
+		$results->get_template_part( $template );
 	}
 
 	/**

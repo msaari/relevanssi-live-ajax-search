@@ -62,7 +62,25 @@ This filter hook removes the base styles that control the live search result pos
 
 This removes the actual search result styles.
 
+= I'm using Astra and this plugin doesn't work =
+
+It does, Astra search form is just designed in a way that hides the search results. You can find solutions in the [plugin documentation](https://www.relevanssi.com/live-ajax-search/#astra). The easiest solution is adding this to your theme `functions.php`:
+
+`add_filter( 'relevanssi_live_search_add_result_div', '__return_false' );`
+
+= I want to change the number of results shown =
+
+There's a filter for that! Add this to your theme functions.php or in a code snippet:
+
+`add_filter( 'relevanssi_live_search_posts_per_page', function() { return 10; } );`
+
+This will show 10 results. You can adjust the number as you wish.
+
 == Changelog ==
+= 1.2.0 =
+* The way this plugin uses query_posts() can lead to problems (for example with WPML). It is now possible to use a new WP_Query() instead, which is safer.
+* New filter hook `relevanssi_live_search_mode` controls which mode is used: `query_posts` (the default value) is the old way, any other value uses WP_Query.
+* There's a new template file `search-results-query.php`. This template is used for the WP_Query() method.
 
 = 1.1.0 =
 * Improved accessibility: screen readers users get better notifications of what's happening.
