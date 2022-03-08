@@ -137,6 +137,15 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 
 		$args['relevanssi'] = true;
 
+		/**
+		 * Controls the query mode.
+		 *
+		 * The default value is 'query_posts', using the original query_posts()
+		 * method of fetching the results. Any other value will use the new
+		 * and safer method of fetching the results with new WP_Query().
+		 *
+		 * @param string $mode The query mode, default 'query_posts'.
+		 */
 		$mode = apply_filters( 'relevanssi_live_search_mode', 'query_posts' );
 
 		if ( 'query_posts' === $mode ) {
