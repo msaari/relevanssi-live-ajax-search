@@ -3,7 +3,7 @@ Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
 Tested up to: 5.9
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,14 @@ There's a filter for that! Add this to your theme functions.php or in a code sni
 
 This will show 10 results. You can adjust the number as you wish.
 
+= I'm using WPML and get no results! =
+
+For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and WPML leads to problems. To solve this problem, use the `WP_Query` mode of fetching the results. To activate the mode, add this to your theme functions.php:
+
+`add_filter( 'relevanssi_live_search_mode', function() { return 'wp_query'; } );`
+
+This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
+
 == Changelog ==
 = 1.2.0 =
 * The way this plugin uses query_posts() can lead to problems (for example with WPML). It is now possible to use a new WP_Query() instead, which is safer.
@@ -83,7 +91,7 @@ This will show 10 results. You can adjust the number as you wish.
 * There's a new template file `search-results-query.php`. This template is used for the WP_Query() method.
 
 = 1.1.0 =
-* Improved accessibility: screen readers users get better notifications of what's happening.
+* Improved accessibility: screen reader users get better notifications of what's happening.
 * Improved accessibility: the default location for the search results is now the next tab stop from the search form, within div#rlvlive_1.
 * Removes JQuery migration deprecation warnings.
 * The search results now show the total number of results found. These changes are in the default template, so if you're using a custom template, check the default template.
@@ -95,6 +103,8 @@ This will show 10 results. You can adjust the number as you wish.
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 1.2.0 =
+* New compatibility mode for better third-party compatibility.
 
 = 1.1.0 =
 * Accessibility improvements and new features.

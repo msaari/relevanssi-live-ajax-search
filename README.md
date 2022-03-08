@@ -1,14 +1,14 @@
-# Relevanssi Live Ajax Search
-
+=== Relevanssi Live Ajax Search ===
 **Contributors:** msaari \
 **Tags:** search, live, ajax \
 **Requires at least:** 4.9 \
 **Tested up to:** 5.9 \
-**Stable tag:** 1.0.0 \
+**Stable tag:** 1.2.0 \
 **License:** GPLv2 or later \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Template powered live search for any WordPress theme. Compatible with Relevanssi search!
+
 
 ## Description
 
@@ -16,9 +16,11 @@ Relevanssi Live Ajax Search enables ajax live search for your search forms. It w
 
 Relevanssi Live Ajax Search displays the search results using templates. You can easily override the default templates from your theme to make the results look the way you want them to look.
 
+
 ### Works best with Relevanssi
 
 Relevanssi Live Ajax Search only provides you with live search results. To get really good results, use [Relevanssi](https://wordpress.org/plugins/relevanssi/), [Relevanssi Premium](https://www.relevanssi.com/buy-premium/) or [Relevanssi Light](https://wordpress.org/plugins/relevanssi-light/). Relevanssi Live Ajax Search automatically uses Relevanssi to power the search results if Relevanssi is installed and active. However, you don't need Relevanssi; Relevanssi Live Ajax Search also works with the default WP search.
+
 
 ### Changes from SearchWP Live Ajax Search
 
@@ -30,10 +32,12 @@ The widget has also been removed. It was unnecessary and outdated.
 
 Relevanssi Live Ajax Search can now take over the Gutenberg `core/search` search form.
 
+
 ### This plugin is on GitHub
 
 Feel free to open up issues at
 [https://github.com/msaari/relevanssi-live-ajax-search](https://github.com/msaari/relevanssi-live-ajax-search).
+
 
 ## Installation
 
@@ -43,7 +47,9 @@ Feel free to open up issues at
 
 If Relevanssi Live Ajax Search does not automatically attach itself to your search form, you can enable it by adding a single HTML5 data attribute (<code>data-rlvlive="true"</code>) to the input field of your search form.
 
+
 ## Frequently Asked Questions
+
 
 ### How do I create a custom search results template
 
@@ -63,8 +69,72 @@ This filter hook removes the base styles that control the live search result pos
 
 This removes the actual search result styles.
 
+
+### I'm using Astra and this plugin doesn't work
+
+It does, Astra search form is just designed in a way that hides the search results. You can find solutions in the [plugin documentation](https://www.relevanssi.com/live-ajax-search/#astra). The easiest solution is adding this to your theme `functions.php`:
+
+`add_filter( 'relevanssi_live_search_add_result_div', '__return_false' );`
+
+
+### I want to change the number of results shown
+
+There's a filter for that! Add this to your theme functions.php or in a code snippet:
+
+`add_filter( 'relevanssi_live_search_posts_per_page', function() { return 10; } );`
+
+This will show 10 results. You can adjust the number as you wish.
+
+
+### I'm using WPML and get no results!
+
+For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and WPML leads to problems. To solve this problem, use the `WP_Query` mode of fetching the results. To activate the mode, add this to your theme functions.php:
+
+`add_filter( 'relevanssi_live_search_mode', function() { return 'wp_query'; } );`
+
+This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
+
+
 ## Changelog
+
+
+### 1.2.0
+
+* The way this plugin uses query_posts() can lead to problems (for example with WPML). It is now possible to use a new WP_Query() instead, which is safer.
+* New filter hook `relevanssi_live_search_mode` controls which mode is used: `query_posts` (the default value) is the old way, any other value uses WP_Query.
+* There's a new template file `search-results-query.php`. This template is used for the WP_Query() method.
+
+
+### 1.1.0
+
+* Improved accessibility: screen reader users get better notifications of what's happening.
+* Improved accessibility: the default location for the search results is now the next tab stop from the search form, within div#rlvlive_1.
+* Removes JQuery migration deprecation warnings.
+* The search results now show the total number of results found. These changes are in the default template, so if you're using a custom template, check the default template.
+* New filter hook `relevanssi_live_search_status_location` controls where the total is displayed ('before', 'after' or nowhere for any other value, in which case only the screen reader status is added).
+* New filter hook `relevanssi_live_search_add_result_div` controls whether an extra div is added for the results.
+* If Relevanssi is available, searches that find no results show 'Did you mean' suggestions.
+
 
 ### 1.0.0
 
-- First version based on the version 1.6.1 of SearchWP Live Ajax Search.
+* First version based on the version 1.6.1 of SearchWP Live Ajax Search.
+
+
+## Upgrade Notice
+
+
+### 1.2.0
+
+* New compatibility mode for better third-party compatibility.
+
+
+### 1.1.0
+
+* Accessibility improvements and new features.
+
+
+### 1.0.0
+
+* First release, based on SearchWP Live Ajax Search 1.6.1.
+
