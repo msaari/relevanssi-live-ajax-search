@@ -85,6 +85,8 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+* Adds automatic hijack for WooCommerce product search form.
+
 = 1.2.0 =
 * The way this plugin uses query_posts() can lead to problems (for example with WPML). It is now possible to use a new WP_Query() instead, which is safer.
 * New filter hook `relevanssi_live_search_mode` controls which mode is used: `query_posts` (the default value) is the old way, any other value uses WP_Query.

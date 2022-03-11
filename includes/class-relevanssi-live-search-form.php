@@ -103,6 +103,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	public function setup() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 		add_filter( 'get_search_form', array( $this, 'get_search_form' ), 999, 1 );
+		add_filter( 'get_product_search_form', array( $this, 'get_search_form' ), 999, 1 );
 		add_filter( 'render_block', array( $this, 'render_block' ), 999, 2 );
 		add_action( 'wp_footer', array( $this, 'base_styles' ) );
 
