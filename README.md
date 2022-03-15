@@ -3,7 +3,7 @@
 **Tags:** search, live, ajax \
 **Requires at least:** 4.9 \
 **Tested up to:** 5.9 \
-**Stable tag:** 1.2.0 \
+**Stable tag:** 1.2.1 \
 **License:** GPLv2 or later \
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,7 @@ Feel free to open up issues at
 1. Activate the plugin.
 1. That's it! Most of the time, that's all you need.
 
-If Relevanssi Live Ajax Search does not automatically attach itself to your search form, you can enable it by adding a single HTML5 data attribute (<code>data-rlvlive="true"</code>) to the input field of your search form.
+If Relevanssi Live Ajax Search does not automatically attach itself to your search form, you can enable it by adding a single HTML5 data attribute (<code>data-rlvlive="true"</code>) to the input field of your search form. [You can find more information in the plugin documentation.](https://www.relevanssi.com/live-ajax-search/)
 
 
 ## Frequently Asked Questions
@@ -95,14 +95,26 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 
+### I'm using Storefront and this plugin doesn't work
+
+Storefront also hides the search results for some reason. Use this:
+
+`add_filter( 'relevanssi_live_search_add_result_div', '__return_false' );`
+
+
 ## Changelog
+
+
+### 1.2.1
+
+* Adds automatic hijack for WooCommerce product search form.
 
 
 ### 1.2.0
 
-* The way this plugin uses query_posts() can lead to problems (for example with WPML). It is now possible to use a new WP_Query() instead, which is safer.
+* The way this plugin uses `query_posts()` can lead to problems (for example with WPML). It is now possible to use a new `WP_Query` instead, which is safer.
 * New filter hook `relevanssi_live_search_mode` controls which mode is used: `query_posts` (the default value) is the old way, any other value uses WP_Query.
-* There's a new template file `search-results-query.php`. This template is used for the WP_Query() method.
+* There's a new template file `search-results-query.php`. This template is used for the `WP_Query` method.
 
 
 ### 1.1.0
@@ -122,6 +134,11 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 
 
 ## Upgrade Notice
+
+
+### 1.2.1
+
+* Support for automatic hijacking of WooCommerce product search forms.
 
 
 ### 1.2.0
