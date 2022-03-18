@@ -257,7 +257,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		 *
 		 * @param boolean Whether or not to enable the base styles.
 		 */
-		if ( apply_filters( 'relevanssi_live_search_base_styles', false ) ) {
+		if ( false === apply_filters( 'relevanssi_live_search_base_styles', true ) ) {
 			return;
 		}
 		?>

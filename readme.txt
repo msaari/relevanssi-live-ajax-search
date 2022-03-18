@@ -3,7 +3,7 @@ Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
 Tested up to: 5.9
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -91,6 +91,9 @@ Storefront also hides the search results for some reason. Use this:
 `add_filter( 'relevanssi_live_search_add_result_div', '__return_false' );`
 
 == Changelog ==
+= 1.2.2 =
+* Fixes the `relevanssi_live_search_base_styles` filter hook, which was in reverse: now it works as expected and disables styles when you give it `false`.
+
 = 1.2.1 =
 * Adds automatic hijack for WooCommerce product search form.
 
@@ -112,6 +115,9 @@ Storefront also hides the search results for some reason. Use this:
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 1.2.2 =
+* Fixes the `relevanssi_live_search_base_styles` hook.
+
 = 1.2.1 =
 * Support for automatic hijacking of WooCommerce product search forms.
 
