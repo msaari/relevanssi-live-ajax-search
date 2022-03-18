@@ -133,8 +133,6 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 * proper results template
 	 */
 	public function show_results( $args = array() ) {
-		global $wp_query;
-
 		$args['relevanssi'] = true;
 
 		/**
