@@ -151,7 +151,10 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 			// environment for our template loader, allowing the developer to
 			// utilize everything they normally would in a theme template (and
 			// reducing support requests).
+			remove_filter( 'wpml_active_languages', 'wpml_get_active_languages_filter' );
 			query_posts( $args ); // phpcs:ignore WordPress.WP.DiscouragedFunctions
+			add_filter( 'wpml_active_languages', 'wpml_get_active_languages_filter', 10, 2 );
+
 			$template = 'search-results';
 		} else {
 			global $relevanssi_query;
