@@ -34,65 +34,16 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 
 		add_action( 'wp_ajax_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
 		add_action( 'wp_ajax_nopriv_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
-
-		add_filter( 'option_active_plugins', array( $this, 'control_active_plugins' ) );
-		add_filter( 'site_option_active_sitewide_plugins', array( $this, 'control_active_plugins' ) );
 	}
 
-		/**
+	/**
 	 * Get the messages template
 	 */
 	public function get_ajax_messages_template() {
-    ob_start();
-    include(__DIR__. '/../templates/search-results-messages.php');
-    $content = ob_get_clean();
-		wp_send_json($content);
-	}
-
-
-	/**
-	 * Potential (opt-in) performance tweak: skip any plugin that's not
-	 * related to the search.
-	 *
-	 * @param array $plugins The active plugins.
-	 *
-	 * @return array Filtered plugins.
-	 */
-	public function control_active_plugins( array $plugins ) : array {
-		/**
-		 * If true, skip any plugin that's not related to the search.
-		 *
-		 * @param bool Whether to skip the unrelated plugins.
-		 */
-		$applicable = apply_filters( 'relevanssi_live_search_control_plugins_during_search', false );
-
-		if ( ! $applicable || ! is_array( $plugins ) || empty( $plugins ) ) {
-			return $plugins;
-		}
-
-		if ( ! isset( $_REQUEST['rlvquery'] ) || empty( $_REQUEST['rlvquery'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-			return $plugins;
-		}
-
-		// The default plugin whitelist is anything Relevanssi-related.
-		$plugin_whitelist = array();
-		foreach ( $plugins as $plugin_slug ) {
-			if ( 0 === strpos( $plugin_slug, 'relevanssi' ) ) {
-				$plugin_whitelist[] = $plugin_slug;
-			}
-		}
-
-		/**
-		 * Filters the plugin whitelist.
-		 *
-		 * If the plugin filtering is used, this filter hook can be used to
-		 * adjust which plugins are allowed to be used during the search.
-		 *
-		 * @param array $plugin_whitelist The plugin whitelist.
-		 */
-		$active_plugins = array_values( (array) apply_filters( 'relevanssi_live_search_plugin_whitelist', $plugin_whitelist ) );
-
-		return $active_plugins;
+		ob_start();
+		include __DIR__ . '/../templates/search-results-messages.php';
+		$content = ob_get_clean();
+		wp_send_json( $content );
 	}
 
 	/**
@@ -180,10 +131,6 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 
 		$results->get_template_part( $template );
 	}
-
-
-
-
 
 	/**
 	 * Retrieve the number of items to display
