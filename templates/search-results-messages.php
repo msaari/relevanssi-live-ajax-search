@@ -1,2 +1,1 @@
-<div class="live-ajax-messages">message from deep ajax</div>
-
+<div class="live-ajax-messages"></div>
