@@ -27,6 +27,9 @@
 	$status_element = '<div class="relevanssi-live-search-result-status" role="status" aria-live="polite"><p>';
 	// Translators: %s is the number of results found.
 	$status_element .= sprintf( esc_html( _n( '%d result found.', '%d results found.', $wp_query->found_posts, 'relevanssi-live-ajax-search' ) ), intval( $wp_query->found_posts ) );
+	if ( $wp_query->found_posts > 7 ) {
+		$status_element .= ' ' . sprintf( esc_html( __( 'Press enter to see all the results.', 'relevanssi-live-ajax-search' ) ) );
+	}
 	$status_element .= '</p></div>';
 
 	/**
