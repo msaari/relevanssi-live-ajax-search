@@ -99,7 +99,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		$args      = $_POST; // phpcs:ignore WordPress.Security.NonceVerification
 		$args['s'] = $query;
 
-		$args['posts_per_page'] = isset( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
+		$args['posts_per_page'] = isset( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification, WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			? intval( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
 			: $this->get_posts_per_page();
 
