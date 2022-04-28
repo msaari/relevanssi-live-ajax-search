@@ -1,7 +1,6 @@
 (function () {
 	'use strict';
 
-	//import { Spinner } from "spin.js"
 	(function () {
 		var plugin_name = "relevanssi_live_search";
 
@@ -93,33 +92,12 @@
 						jQuery("body").append(jQuery(results_el_html));
 					}
 
-					this.results_el = jQuery("#" + this.results_id);				
+					this.results_el = jQuery("#" + this.results_id);
 
 					this.position_results();
 					jQuery(window).on("resize", function () {
 						self.position_results();
 					});
-
-					// prep the spinner
-					// if (this.config.spinner) {
-					// 	// Version 1.4 added some new configuration options that may not be included
-					// 	// if the configuration was configured for an earlier version, so we need
-					// 	// to check for these new values and re-set them if necessary
-					// 	if (typeof this.config.spinner.scale === "undefined") {
-					// 		this.config.spinner.scale = 1
-					// 	}
-					// 	if (typeof this.config.spinner.fadeColor === "undefined") {
-					// 		this.config.spinner.fadeColor = "transparent"
-					// 	}
-					// 	if (typeof this.config.spinner.animation === "undefined") {
-					// 		this.config.spinner.animation = "relevanssi-spinner-line-fade-quick"
-					// 	}
-					// 	if (typeof this.config.spinner.position === "undefined") {
-					// 		this.config.spinner.position = "absolute"
-					// 	}
-
-					// 	this.spinner = new Spinner(this.config.spinner)
-					// }
 
 					if (typeof this.config.abort_on_enter === "undefined") {
 						this.config.abort_on_enter = true;
@@ -143,7 +121,7 @@
 								self.destroy_results();
 							}
 							// if the user typed, show the results wrapper and spinner
-							else if (!self.results_showing) {
+							else if (!self.results_showing && e.currentTarget.value.length >= self.config.input.min_chars) {
 								self.position_results();
 								self.results_el.addClass("relevanssi-live-search-results-showing");
 								self.show_spinner();
@@ -156,13 +134,13 @@
 								!self.spinner_showing &&
 								self.last_string !== self.input_el.val().trim()
 							) {
-								//self.results_el.empty()
 								self.results_el.find('.ajax-results').empty();
-								//self.results_el.html(
-									self.results_el.append(
-									"<p class='screen-reader-text' role='status' aria-live='polite'>" +
-										relevanssi_live_search_params.msg_loading_results +
-										"</p>"
+								self.results_el.find('.live-ajax-messages').empty();
+
+								self.results_el.find('.live-ajax-messages').append(
+								"<p class='screen-reader-text' id='relevanssi-live-search-status' role='status' aria-live='polite'>" +
+									relevanssi_live_search_params.msg_loading_results +
+									"</p>"
 								);
 								self.show_spinner();
 							}
@@ -199,15 +177,9 @@
 				this.load_ajax_messages_template();
 			},
 
-
-
-
 			load_ajax_messages_template: function(){
-				//console.log(relevanssi_live_search_params.ajaxurl);
-				
 				jQuery.ajax({
-					//url: relevanssi_live_search_params.ajaxurl,
-					url: ajax_url,
+					url: relevanssi_live_search_params.ajaxurl,
 					data: 'action=relevanssi_live_search_messages',
 					dataType: 'json',
 					//action: 'wp_ajax_relevanssi_live_search_messages',
@@ -294,7 +266,8 @@
 							values,
 						]);
 						self.position_results();
-						
+
+						$results.find('.live-ajax-message').html();
 						$results.find('.ajax-results').html(response);
 						//$results.html(response);
 
@@ -504,21 +477,21 @@
 			},
 
 			show_spinner: function () {
-				this.results_el.addClass('has-spinner');
-				// if (this.config.spinner && !this.spinner_showing) {
-				// 	this.spinner.spin(document.getElementById(this.results_id))
-				// 	this.spinner_showing = true
-				// 	jQuery(document).trigger("relevanssi_live_show_spinner")
-				// }
+				var spinner = document.getElementById('relevanssi-live-ajax-search-spinner');
+
+				if (spinner) {
+					return
+				}
+
+				spinner = document.createElement('div');
+				spinner.className = 'has-spinner';
+				spinner.id = 'relevanssi-live-ajax-search-spinner';
+				this.results_el.find('.live-ajax-messages').append(spinner);
 			},
 
 			hide_spinner: function () {
-				this.results_el.removeClass('has-spinner');
-				// if (this.config.spinner) {
-				// 	this.spinner.stop()
-				// 	this.spinner_showing = false
-				// 	jQuery(document).trigger("relevanssi_live_hide_spinner")
-				// }
+				var spinner = document.getElementById('relevanssi-live-ajax-search-spinner');
+				spinner.remove();
 			},
 
 
