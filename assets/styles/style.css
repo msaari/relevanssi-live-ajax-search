@@ -13,10 +13,6 @@
   max-height: 300px;
 }
 
-.relevanssi-live-search-no-min-chars .spinner {
-  opacity: 0.3;
-}
-
 .relevanssi-live-search-result p,
 .relevanssi-live-search-result-status p {
   font-size: 0.9em;
@@ -63,33 +59,6 @@
   white-space: nowrap !important;
 }
 
-@keyframes relevanssi-spinner-line-fade-more {
-  0%, 100% {
-    opacity: 0;
-    /* minimum opacity */
-  }
-  1% {
-    opacity: 1;
-  }
-}
-@keyframes relevanssi-spinner-line-fade-quick {
-  0%, 39%, 100% {
-    opacity: 0.25;
-    /* minimum opacity */
-  }
-  40% {
-    opacity: 1;
-  }
-}
-@keyframes relevanssi-spinner-line-fade-default {
-  0%, 100% {
-    opacity: 0.22;
-    /* minimum opacity */
-  }
-  1% {
-    opacity: 1;
-  }
-}
 .has-spinner {
   width: 56px;
   height: 56px;
