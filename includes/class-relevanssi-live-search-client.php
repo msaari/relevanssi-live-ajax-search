@@ -32,9 +32,23 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		add_action( 'wp_ajax_relevanssi_live_search', array( $this, 'search' ) );
 		add_action( 'wp_ajax_nopriv_relevanssi_live_search', array( $this, 'search' ) );
 
+		add_action( 'wp_ajax_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
+		add_action( 'wp_ajax_nopriv_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
+
 		add_filter( 'option_active_plugins', array( $this, 'control_active_plugins' ) );
 		add_filter( 'site_option_active_sitewide_plugins', array( $this, 'control_active_plugins' ) );
 	}
+
+		/**
+	 * Get the messages template
+	 */
+	public function get_ajax_messages_template() {
+    ob_start();
+    include(__DIR__. '/../templates/search-results-messages.php');
+    $content = ob_get_clean();
+		wp_send_json($content);
+	}
+
 
 	/**
 	 * Potential (opt-in) performance tweak: skip any plugin that's not
@@ -99,7 +113,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		$args      = $_POST; // phpcs:ignore WordPress.Security.NonceVerification
 		$args['s'] = $query;
 
-		$args['posts_per_page'] = isset( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification, WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
+		$args['posts_per_page'] = isset( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
 			? intval( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
 			: $this->get_posts_per_page();
 
@@ -166,6 +180,10 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 
 		$results->get_template_part( $template );
 	}
+
+
+
+
 
 	/**
 	 * Retrieve the number of items to display

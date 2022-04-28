@@ -1,4 +1,4 @@
-import { Spinner } from "spin.js"
+//import { Spinner } from "spin.js"
 ;(function () {
 	var plugin_name = "relevanssi_live_search"
 
@@ -9,6 +9,7 @@ import { Spinner } from "spin.js"
 		this.input_el = element // the input element itself
 		this.results_id = null // the id attribute of the results wrapper for this search field
 		this.results_el = null // the results wrapper element itself
+		//this.messages = null; // php template for spinner and other text messages
 		this.parent_el = null // allows results wrapper element to be injected into a custom parent element
 		this.results_showing = false // whether the results are showing
 		this.form_el = null // the search form element itself
@@ -70,10 +71,9 @@ import { Spinner } from "spin.js"
 				)
 
 				// set up and position the results container
-				var results_el_html =
-					'<div aria-expanded="false" aria-live="polite" class="relevanssi-live-search-results" id="' +
-					this.results_id +
-					'" role="listbox" tabindex="0"></div>'
+				var results_el_html = '<div aria-expanded="false" aria-live="polite" class="relevanssi-live-search-results" id="' + this.results_id + '" role="listbox" tabindex="0">'
+				results_el_html += '<div class="ajax-results"></div>';
+				results_el_html += '</div>';
 
 				// if parent_el was specified, inject the results el into it instead of appending it to the body
 				var rlvparentel = $input.data("rlvparentel")
@@ -90,32 +90,33 @@ import { Spinner } from "spin.js"
 					jQuery("body").append(jQuery(results_el_html))
 				}
 
-				this.results_el = jQuery("#" + this.results_id)
+				this.results_el = jQuery("#" + this.results_id);				
+
 				this.position_results()
 				jQuery(window).on("resize", function () {
 					self.position_results()
 				})
 
 				// prep the spinner
-				if (this.config.spinner) {
-					// Version 1.4 added some new configuration options that may not be included
-					// if the configuration was configured for an earlier version, so we need
-					// to check for these new values and re-set them if necessary
-					if (typeof this.config.spinner.scale === "undefined") {
-						this.config.spinner.scale = 1
-					}
-					if (typeof this.config.spinner.fadeColor === "undefined") {
-						this.config.spinner.fadeColor = "transparent"
-					}
-					if (typeof this.config.spinner.animation === "undefined") {
-						this.config.spinner.animation = "relevanssi-spinner-line-fade-quick"
-					}
-					if (typeof this.config.spinner.position === "undefined") {
-						this.config.spinner.position = "absolute"
-					}
+				// if (this.config.spinner) {
+				// 	// Version 1.4 added some new configuration options that may not be included
+				// 	// if the configuration was configured for an earlier version, so we need
+				// 	// to check for these new values and re-set them if necessary
+				// 	if (typeof this.config.spinner.scale === "undefined") {
+				// 		this.config.spinner.scale = 1
+				// 	}
+				// 	if (typeof this.config.spinner.fadeColor === "undefined") {
+				// 		this.config.spinner.fadeColor = "transparent"
+				// 	}
+				// 	if (typeof this.config.spinner.animation === "undefined") {
+				// 		this.config.spinner.animation = "relevanssi-spinner-line-fade-quick"
+				// 	}
+				// 	if (typeof this.config.spinner.position === "undefined") {
+				// 		this.config.spinner.position = "absolute"
+				// 	}
 
-					this.spinner = new Spinner(this.config.spinner)
-				}
+				// 	this.spinner = new Spinner(this.config.spinner)
+				// }
 
 				if (typeof this.config.abort_on_enter === "undefined") {
 					this.config.abort_on_enter = true
@@ -152,8 +153,10 @@ import { Spinner } from "spin.js"
 							!self.spinner_showing &&
 							self.last_string !== self.input_el.val().trim()
 						) {
-							self.results_el.empty()
-							self.results_el.html(
+							//self.results_el.empty()
+							self.results_el.find('.ajax-results').empty()
+							//self.results_el.html(
+								self.results_el.append(
 								"<p class='screen-reader-text' role='status' aria-live='polite'>" +
 									relevanssi_live_search_params.msg_loading_results +
 									"</p>"
@@ -189,7 +192,123 @@ import { Spinner } from "spin.js"
 					e.stopPropagation()
 				})
 			}
+
+			this.load_ajax_messages_template();
 		},
+
+
+
+
+		load_ajax_messages_template: function(){
+			//console.log(relevanssi_live_search_params.ajaxurl);
+			
+			jQuery.ajax({
+				//url: relevanssi_live_search_params.ajaxurl,
+				url: ajax_url,
+				data: 'action=relevanssi_live_search_messages',
+				dataType: 'json',
+				//action: 'wp_ajax_relevanssi_live_search_messages',
+				type: "GET",
+				complete: function(x, s){
+					//console.log('complete', x, s)
+				},
+				error: function(x, s, m){
+					//console.log('error', x, s, m)
+				},
+				success: function(response){
+					//this.messages = response; //TEMP
+					this.results_el.prepend(response);
+				}.bind(this),
+			})
+		},
+
+		// perform the search
+		search: function (e) {
+			var self = this,
+				$form = this.form_el,
+				values = $form.serialize(),
+				action = $form.attr("action") ? $form.attr("action") : "",
+				$input = this.input_el,
+				$results = this.results_el
+
+			jQuery(document).trigger("relevanssi_live_search_start", [
+				$input,
+				$results,
+				$form,
+				action,
+				values,
+			])
+
+			this.aria_expanded(false)
+
+			// append our action and (redundant) query (so as to save the trouble of finding it again server side)
+			values +=
+				"&action=relevanssi_live_search&rlvquery=" +
+				encodeURIComponent($input.val()) +
+				"&origin_id=" +
+				parseInt(relevanssi_live_search_params.origin_id, 10)
+
+			if (action.indexOf("?") !== -1) {
+				action = action.split("?")
+				values += "&" + action[1]
+			}
+
+			this.last_string = $input.val()
+			this.has_results = true
+			// put the request into the current_request var
+			this.current_request = jQuery.ajax({
+				url: relevanssi_live_search_params.ajaxurl,
+				type: "POST",
+				data: values,
+				complete: function () {
+					jQuery(document).trigger("relevanssi_live_search_complete", [
+						$input,
+						$results,
+						$form,
+						action,
+						values,
+					])
+					self.spinner_showing = false
+					self.hide_spinner()
+					this.current_request = false
+					jQuery(document).trigger("relevanssi_live_search_shutdown", [
+						$input,
+						$results,
+						$form,
+						action,
+						values,
+					])
+				},
+				success: function (response) {
+					if (response === 0) {
+						response = ""
+					}
+					jQuery(document).trigger("relevanssi_live_search_success", [
+						$input,
+						$results,
+						$form,
+						action,
+						values,
+					])
+					self.position_results()
+					
+					$results.find('.ajax-results').html(response);
+					//$results.html(response);
+
+					self.aria_expanded(true)
+					self.keyboard_navigation()
+					jQuery(document).trigger("relevanssi_live_search_shutdown", [
+						$input,
+						$results,
+						$form,
+						action,
+						values,
+					])
+				},
+			})
+		},
+
+
 
 		keyboard_navigation: function () {
 			var self = this,
@@ -351,9 +470,12 @@ import { Spinner } from "spin.js"
 		destroy_results: function (e) {
 			this.hide_spinner()
 			this.aria_expanded(false)
-			this.results_el
-				.empty()
-				.removeClass("relevanssi-live-search-results-showing")
+			this.results_el.find('.ajax-results').empty();
+			this.results_el.removeClass("relevanssi-live-search-results-showing");
+
+			// this.results_el
+			// 	.empty()
+			// 	.removeClass("relevanssi-live-search-results-showing")
 			this.results_showing = false
 			this.has_results = false
 
@@ -379,103 +501,23 @@ import { Spinner } from "spin.js"
 		},
 
 		show_spinner: function () {
-			if (this.config.spinner && !this.spinner_showing) {
-				this.spinner.spin(document.getElementById(this.results_id))
-				this.spinner_showing = true
-				jQuery(document).trigger("relevanssi_live_show_spinner")
-			}
+			this.results_el.addClass('has-spinner');
+			// if (this.config.spinner && !this.spinner_showing) {
+			// 	this.spinner.spin(document.getElementById(this.results_id))
+			// 	this.spinner_showing = true
+			// 	jQuery(document).trigger("relevanssi_live_show_spinner")
+			// }
 		},
 
 		hide_spinner: function () {
-			if (this.config.spinner) {
-				this.spinner.stop()
-				this.spinner_showing = false
-				jQuery(document).trigger("relevanssi_live_hide_spinner")
-			}
+			this.results_el.removeClass('has-spinner');
+			// if (this.config.spinner) {
+			// 	this.spinner.stop()
+			// 	this.spinner_showing = false
+			// 	jQuery(document).trigger("relevanssi_live_hide_spinner")
+			// }
 		},
 
-		// perform the search
-		search: function (e) {
-			var self = this,
-				$form = this.form_el,
-				values = $form.serialize(),
-				action = $form.attr("action") ? $form.attr("action") : "",
-				$input = this.input_el,
-				$results = this.results_el
-
-			jQuery(document).trigger("relevanssi_live_search_start", [
-				$input,
-				$results,
-				$form,
-				action,
-				values,
-			])
-
-			this.aria_expanded(false)
-
-			// append our action and (redundant) query (so as to save the trouble of finding it again server side)
-			values +=
-				"&action=relevanssi_live_search&rlvquery=" +
-				encodeURIComponent($input.val()) +
-				"&origin_id=" +
-				parseInt(relevanssi_live_search_params.origin_id, 10)
-
-			if (action.indexOf("?") !== -1) {
-				action = action.split("?")
-				values += "&" + action[1]
-			}
-
-			this.last_string = $input.val()
-			this.has_results = true
-			// put the request into the current_request var
-			this.current_request = jQuery.ajax({
-				url: relevanssi_live_search_params.ajaxurl,
-				type: "POST",
-				data: values,
-				complete: function () {
-					jQuery(document).trigger("relevanssi_live_search_complete", [
-						$input,
-						$results,
-						$form,
-						action,
-						values,
-					])
-					self.spinner_showing = false
-					self.hide_spinner()
-					this.current_request = false
-					jQuery(document).trigger("relevanssi_live_search_shutdown", [
-						$input,
-						$results,
-						$form,
-						action,
-						values,
-					])
-				},
-				success: function (response) {
-					if (response === 0) {
-						response = ""
-					}
-					jQuery(document).trigger("relevanssi_live_search_success", [
-						$input,
-						$results,
-						$form,
-						action,
-						values,
-					])
-					self.position_results()
-					$results.html(response)
-					self.aria_expanded(true)
-					self.keyboard_navigation()
-					jQuery(document).trigger("relevanssi_live_search_shutdown", [
-						$input,
-						$results,
-						$form,
-						action,
-						values,
-					])
-				},
-			})
-		},
 
 		uniqid: function (prefix, more_entropy) {
 			// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
