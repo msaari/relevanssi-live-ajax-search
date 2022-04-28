@@ -257,7 +257,7 @@
 					])
 					self.position_results()
 
-					$results.find('.live-ajax-message').html();
+					$results.find('.live-ajax-messages').empty();
 					$results.find('.ajax-results').html(response);
 					//$results.html(response);
 
