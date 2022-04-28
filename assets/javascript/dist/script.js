@@ -144,13 +144,6 @@
 								);
 								self.show_spinner();
 							}
-
-							// Capture whether minimum characters have been entered
-							if (e.currentTarget.value.length >= self.config.input.min_chars) {
-								self.results_el.removeClass("relevanssi-live-search-no-min-chars");
-							} else {
-								self.results_el.addClass("relevanssi-live-search-no-min-chars");
-							}
 						})
 						.on("keyup", jQuery.proxy(this.maybe_search, this));
 

@@ -264,13 +264,6 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 			.relevanssi-live-search-no-results, .relevanssi-live-search-didyoumean {
 				padding: 0 1em;
 			}
-
-			.relevanssi-live-search-no-min-chars:after {
-				content: "<?php echo esc_attr_e( 'Continue typing', 'relevanssi-live-ajax-search' ); ?>";
-				display: block;
-				text-align: center;
-				padding: 2em 2em 0;
-			}
 		</style>
 		<?php
 	}
