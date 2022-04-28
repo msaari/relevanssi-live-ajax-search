@@ -467,23 +467,12 @@
 		},
 
 		show_spinner: function () {
-			var spinner = document.getElementById('relevanssi-live-ajax-search-spinner')
-
-			if (spinner) {
-				return
-			}
-
-			spinner = document.createElement('div')
-			spinner.className = 'has-spinner'
-			spinner.id = 'relevanssi-live-ajax-search-spinner'
-			this.results_el.find('.live-ajax-messages').append(spinner)
+			jQuery('#relevanssi-live-ajax-search-spinner').addClass('has-spinner')
 		},
 
 		hide_spinner: function () {
-			var spinner = document.getElementById('relevanssi-live-ajax-search-spinner')
-			spinner.remove()
+			jQuery('#relevanssi-live-ajax-search-spinner').removeClass('has-spinner')
 		},
-
 
 		uniqid: function (prefix, more_entropy) {
 			// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
