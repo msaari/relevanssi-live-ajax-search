@@ -211,7 +211,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		 */
 		$add_result_div = apply_filters( 'relevanssi_live_search_add_result_div', true );
 
-		$instructions = '<span style="display: none">'
+		$instructions = '<span class="relevanssi-live-search-instructions">'
 			. __( 'When autocomplete results are available use up and down arrows to review and enter to go to the desired page. Touch device users, explore by touch or with swipe gestures.', 'relevanssi-live-ajax-search' )
 			. '</span>';
 

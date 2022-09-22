@@ -94,7 +94,7 @@ Storefront also hides the search results for some reason. Use this:
 = 2.0 =
 * The `relevanssi_live_search_control_plugins_during_search` functionality has been removed.
 * The search now uses a CSS spinner instead of the old Javascript spinner.
-* Improved accessibility: the instructions for screen reader users are moved from the `aria-label` parameter to a separate `span` element with a `display: none`.
+* Improved accessibility: the instructions for screen reader users are moved from the `aria-label` parameter to a separate `span` element that is hidden from sight.
 
 = 1.2.2 =
 * Fixes the `relevanssi_live_search_base_styles` filter hook, which was in reverse: now it works as expected and disables styles when you give it `false`.
