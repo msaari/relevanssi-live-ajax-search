@@ -131,7 +131,6 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 			'config'              => $this->configs,
 			'msg_no_config_found' => __( 'No valid Relevanssi Live Search configuration found!', 'relevanssi-live-ajax-search' ),
 			'msg_loading_results' => __( 'Loading search results.', 'relevanssi-live-ajax-search' ),
-			'aria_instructions'   => __( 'When autocomplete results are available use up and down arrows to review and enter to go to the desired page. Touch device users, explore by touch or with swipe gestures.', 'relevanssi-live-ajax-search' ),
 		);
 
 		// We need to JSON encode the configs.
@@ -212,10 +211,15 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		 */
 		$add_result_div = apply_filters( 'relevanssi_live_search_add_result_div', true );
 
+		$instructions = '<span style="display: none">'
+			. __( 'When autocomplete results are available use up and down arrows to review and enter to go to the desired page. Touch device users, explore by touch or with swipe gestures.', 'relevanssi-live-ajax-search' )
+			. '</span>';
+
 		$form_number = $this->get_form_number();
 		$form_id     = 'rlvlive_' . $form_number;
 		$parentel    = $add_result_div ? 'data-rlvparentel="#' . $form_id . '"' : '';
 		$html        = str_replace( 'name="s"', 'name="s" data-rlvlive="true" ' . $parentel . ' data-rlvconfig="' . esc_attr( $config ) . '"', $html );
+		$html        = str_replace( '</form>', $instructions . '</form>', $html );
 		if ( $add_result_div ) {
 			$html = str_replace( '</form>', '<div id="' . $form_id . '"></div></form>', $html );
 		}

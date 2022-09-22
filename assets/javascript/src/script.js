@@ -64,10 +64,6 @@
 				// #a11y: ARIA attributes
 				$input.attr("aria-owns", this.results_id)
 				$input.attr("aria-autocomplete", "both")
-				$input.attr(
-					"aria-label",
-					relevanssi_live_search_params.aria_instructions
-				)
 
 				// set up and position the results container
 				var results_el_html = '<div aria-expanded="false" aria-live="polite" class="relevanssi-live-search-results" id="' + this.results_id + '" role="listbox" tabindex="0">'
