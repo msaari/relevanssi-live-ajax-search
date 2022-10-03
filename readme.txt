@@ -2,8 +2,8 @@
 Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
-Tested up to: 5.9
-Stable tag: 1.2.2
+Tested up to: 6.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,7 +62,7 @@ This filter hook removes the base styles that control the live search result pos
 
 This removes the actual search result styles.
 
-= I'm using Astra and this plugin doesn't work =
+= I'm using Astra, Storefront, or Divi, and this plugin doesn't work =
 
 It does, Astra search form is just designed in a way that hides the search results. You can find solutions in the [plugin documentation](https://www.relevanssi.com/live-ajax-search/#astra). The easiest solution is adding this to your theme `functions.php`:
 
@@ -84,14 +84,8 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
-= I'm using Storefront and this plugin doesn't work =
-
-Storefront also hides the search results for some reason. Use this:
-
-`add_filter( 'relevanssi_live_search_add_result_div', '__return_false' );`
-
 == Changelog ==
-= 2.0 =
+= 2.0.0 =
 * The `relevanssi_live_search_control_plugins_during_search` functionality has been removed.
 * The search now uses a CSS spinner instead of the old Javascript spinner.
 * Improved accessibility: the instructions for screen reader users are moved from the `aria-label` parameter to a separate `span` element that is hidden from sight.
@@ -120,6 +114,9 @@ Storefront also hides the search results for some reason. Use this:
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 2.0.0 =
+* New CSS spinner, accessibility improvements.
+
 = 1.2.2 =
 * Fixes the `relevanssi_live_search_base_styles` hook.
 
