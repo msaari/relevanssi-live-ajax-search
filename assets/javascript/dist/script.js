@@ -11,7 +11,7 @@
 			this.input_el = element; // the input element itself
 			this.results_id = null; // the id attribute of the results wrapper for this search field
 			this.results_el = null; // the results wrapper element itself
-			//this.messages = null; // php template for spinner and other text messages
+			this.messages = null; // php template for spinner and other text messages
 			this.parent_el = null; // allows results wrapper element to be injected into a custom parent element
 			this.results_showing = false; // whether the results are showing
 			this.form_el = null; // the search form element itself
@@ -67,10 +67,6 @@
 					// #a11y: ARIA attributes
 					$input.attr("aria-owns", this.results_id);
 					$input.attr("aria-autocomplete", "both");
-					$input.attr(
-						"aria-label",
-						relevanssi_live_search_params.aria_instructions
-					);
 
 					// set up and position the results container
 					var results_el_html = '<div aria-expanded="false" aria-live="polite" class="relevanssi-live-search-results" id="' + this.results_id + '" role="listbox" tabindex="0">';
@@ -93,6 +89,7 @@
 					}
 
 					this.results_el = jQuery("#" + this.results_id);
+					this.messages = this.results_el.find('.live-ajax-messages');
 
 					this.position_results();
 					jQuery(window).on("resize", function () {
@@ -135,8 +132,7 @@
 								self.last_string !== self.input_el.val().trim()
 							) {
 								self.results_el.find('.ajax-results').empty();
-								self.results_el.find('.live-ajax-messages').empty();
-
+								self.results_el.find('.live-ajax-messages').replaceWith(self.messages);
 								self.results_el.find('.live-ajax-messages').append(
 								"<p class='screen-reader-text' id='relevanssi-live-search-status' role='status' aria-live='polite'>" +
 									relevanssi_live_search_params.msg_loading_results +
@@ -184,8 +180,8 @@
 						//console.log('error', x, s, m)
 					},
 					success: function(response){
-						//this.messages = response; //TEMP
 						this.results_el.prepend(response);
+						this.messages = response;
 					}.bind(this),
 				});
 			},
@@ -260,9 +256,7 @@
 						]);
 						self.position_results();
 
-						$results.find('.live-ajax-messages').empty();
 						$results.find('.ajax-results').html(response);
-						//$results.html(response);
 
 						self.aria_expanded(true);
 						self.keyboard_navigation();
