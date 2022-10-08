@@ -464,11 +464,11 @@
 			},
 
 			show_spinner: function () {
-				jQuery('#relevanssi-live-ajax-search-spinner').addClass('has-spinner');
+				jQuery('#relevanssi-live-ajax-search-spinner').addClass('rlv-has-spinner');
 			},
 
 			hide_spinner: function () {
-				jQuery('#relevanssi-live-ajax-search-spinner').removeClass('has-spinner');
+				jQuery('#relevanssi-live-ajax-search-spinner').removeClass('rlv-has-spinner');
 			},
 
 			uniqid: function (prefix, more_entropy) {

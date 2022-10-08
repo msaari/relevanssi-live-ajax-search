@@ -1,5 +1,3 @@
-/* at the very least you must set these two display properties */
-/* this is so you can use CSS animations when toggling results */
 /* visual styles */
 .relevanssi-live-search-results {
   box-sizing: border-box;
@@ -59,7 +57,7 @@
   white-space: nowrap !important;
 }
 
-.has-spinner {
+.rlv-has-spinner {
   width: 56px;
   height: 56px;
   border: 8px solid #0052ec;
@@ -69,7 +67,7 @@
   animation: loader-rotate 1s linear infinite;
   margin: 1em auto;
 }
-.has-spinner::after {
+.rlv-has-spinner::after {
   content: "";
   width: 8px;
   height: 8px;
