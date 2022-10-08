@@ -1,7 +1,89 @@
-@import "../../../node_modules/spinthatshit/src/loaders.scss";
-/* at the very least you must set these two display properties */
+@use 'sass:math';
 
-/* this is so you can use CSS animations when toggling results */
+@mixin loader-rotate {
+	@keyframes loader-rotate {
+	  0% {
+		transform: rotate(0);
+	  }
+
+	  100% {
+		transform: rotate(360deg);
+	  }
+	}
+  }
+
+  @mixin loader-scale {
+	@keyframes loader-scale {
+	  0% {
+		transform: scale(0);
+		opacity: 0;
+	  }
+
+	  50% {
+		opacity: 1;
+	  }
+
+	  100% {
+		transform: scale(1);
+		opacity: 0;
+	  }
+	}
+  }
+
+$loader-color:              #0052ec !default;
+$loader-size:                  56px !default;
+$loader-height:                20px !default;
+$loader-border-size:            8px !default;
+$loader-gap:                   12px !default;
+$loader-animation-duration:      1s !default;
+
+@function circle-position($size, $border-size, $coordinate) {
+	$center: math.div($size, 2) - $border-size - math.div($border-size, 2);
+	$half-size-border: math.div($size, 2) - $border-size + math.div($border-size, 2);
+	  // root value sqrt(2)/2 = 0.70710678118
+	$root: 0.70710678118;
+	@if $coordinate == y {
+	  @return round($center - ($half-size-border * $root));
+	} @else {
+		@return round($center + ($half-size-border * $root));
+	  }
+  }
+
+  @mixin loader01(
+	  $size: $loader-size,
+	  $color: $loader-color,
+	  $border-size: $loader-border-size,
+	  $duration: $loader-animation-duration,
+	  $align: null
+  ) {
+	width: $size;
+	height: $size;
+	border: $border-size solid $color;
+	border-right-color: transparent;
+	border-radius: 50%;
+	position: relative;
+	animation: loader-rotate $duration linear infinite;
+	@if ($align == center) {
+	  margin: 0 auto;
+	}
+	@if ($align == middle) {
+	  top: 50%;
+	  margin: -(math.div($size, 2)) auto 0;
+	  }
+
+	&::after {
+	  content: '';
+	  width: $border-size;
+	  height: $border-size;
+	  background: $color;
+	  border-radius: 50%;
+	  position: absolute;
+	  top: circle-position($size, $border-size, y);
+	  left: circle-position($size, $border-size, x);
+	}
+
+	@include loader-rotate;
+  }
 
 /* visual styles */
 .relevanssi-live-search-results {
