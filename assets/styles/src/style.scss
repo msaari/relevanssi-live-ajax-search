@@ -144,7 +144,7 @@ $loader-animation-duration:      1s !default;
 	white-space: nowrap !important;
 }
 
-.has-spinner {
+.rlv-has-spinner {
 	@include loader01;
 	margin: 1em auto;
 }
