@@ -3,7 +3,7 @@ Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
 Tested up to: 6.0
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,10 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+= 2.0.1 =
+* Renames the `has-spinner` class to `rlv-has-spinner` to avoid collisions with other plugins.
+* Include an updated version of spinner SCSS in the plugin instead of getting an outdated version from npm.
+
 = 2.0.0 =
 * The `relevanssi_live_search_control_plugins_during_search` functionality has been removed.
 * The search now uses a CSS spinner instead of the old Javascript spinner.
@@ -114,6 +118,9 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 2.0.1 =
+* Rename the CSS spinner class name.
+
 = 2.0.0 =
 * New CSS spinner, accessibility improvements.
 
