@@ -42,12 +42,13 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 				'min_chars' => 3,          // Wait for at least 3 characters before triggering a search.
 			),
 			'results' => array(
-				'position' => 'bottom',   // Where to position the results (bottom|top).
-				'width'    => 'auto',     // Whether the width should automatically match the input (auto|css).
-				'offset'   => array(
+				'position'      => 'bottom',   // Where to position the results (bottom|top).
+				'width'         => 'auto',     // Whether the width should automatically match the input (auto|css).
+				'offset'        => array(
 					'x' => 0,              // X offset (in pixels).
 					'y' => 5,              // Y offset (in pixels).
 				),
+				'static_offset' => true,
 			),
 		),
 	);

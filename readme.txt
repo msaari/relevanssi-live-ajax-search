@@ -87,6 +87,7 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 == Changelog ==
 = 2.1 =
 * Stops errors when editing a page with a Gutenberg search block in it.
+* New parameter `static_offset` helps when the JS counts the result box offset wrong. Setting this to `false` may solve these problems.
 
 = 2.0.1 =
 * Renames the `has-spinner` class to `rlv-has-spinner` to avoid collisions with other plugins.
