@@ -399,6 +399,8 @@
 					return
 				}
 
+				input_offset.top = this.better_offset(this.config.results.static_offset, $input);
+
 				// check for an offset
 				input_offset.left += parseInt(this.config.results.offset.x, 10);
 				input_offset.top += parseInt(this.config.results.offset.y, 10);
@@ -428,6 +430,28 @@
 					$results.css("top"),
 					$results.width(),
 				]);
+			},
+
+			// This function is by Brian and taken from
+			// https://stackoverflow.com/questions/10297688/jquery-offset-values-changes-by-scrolling-the-page/46677056#46677056
+			better_offset: function (is_static, e, v) {
+				is_static = (typeof is_static == 'boolean') ? is_static : true;
+				e = (typeof e == 'object') ? e : $(e);
+				if (v != undefined) {v = (typeof v == 'object') ? v : $(v);} else {v = null;}
+
+				var w = jQuery(window),         // window object
+					wp = w.scrollTop(),         // window position
+					eo = e.offset().top;        // element offset
+				if (v) {
+					var vo = v.offset().top,    // viewer offset
+						vp = v.scrollTop();     // viewer position
+				}
+
+				if (is_static) {
+					return (v) ? (eo - vo) + vp : eo;
+				} else {
+					return (v) ? eo - vo : eo - wp;
+				}
 			},
 
 			destroy_results: function (e) {
