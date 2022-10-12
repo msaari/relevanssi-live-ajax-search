@@ -85,6 +85,9 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+= 2.1 =
+* Stops errors when editing a page with a Gutenberg search block in it.
+
 = 2.0.1 =
 * Renames the `has-spinner` class to `rlv-has-spinner` to avoid collisions with other plugins.
 * Include an updated version of spinner SCSS in the plugin instead of getting an outdated version from npm.

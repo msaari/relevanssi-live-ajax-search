@@ -167,7 +167,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 * @return string The block HTML with the search parameters added.
 	 */
 	public function render_block( $block_content, $block ) {
-		if ( 'core/search' !== $block['blockName'] ) {
+		if ( ! $block_content || is_admin() || 'core/search' !== $block['blockName'] ) {
 			return $block_content;
 		}
 		$block_content = $this->modify_search_form( $block_content );
