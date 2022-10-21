@@ -118,7 +118,7 @@
 						else if (!self.results_showing && e.currentTarget.value.length >= self.config.input.min_chars) {
 							self.position_results()
 							self.results_el.addClass("relevanssi-live-search-results-showing")
-							self.show_spinner()
+							self.show_spinner(self.results_el)
 							self.results_showing = true
 						}
 						// if there are already results on display and the user is changing the search string
@@ -135,7 +135,7 @@
 								relevanssi_live_search_params.msg_loading_results +
 								"</p>"
 							)
-							self.show_spinner()
+							self.show_spinner(self.results_el)
 						}
 					})
 					.on("keyup", jQuery.proxy(this.maybe_search, this))
@@ -230,7 +230,7 @@
 						values,
 					])
 					self.spinner_showing = false
-					self.hide_spinner()
+					self.hide_spinner(self.results_el)
 					this.current_request = false
 					jQuery(document).trigger("relevanssi_live_search_shutdown", [
 						$input,
@@ -452,7 +452,7 @@
 		},
 
 		destroy_results: function (e) {
-			this.hide_spinner()
+			this.hide_spinner(this.results_el)
 			this.aria_expanded(false)
 			this.results_el.find('.ajax-results').empty();
 			this.results_el.removeClass("relevanssi-live-search-results-showing");
@@ -484,12 +484,12 @@
 			}
 		},
 
-		show_spinner: function () {
-			jQuery('#relevanssi-live-ajax-search-spinner').addClass('rlv-has-spinner')
+		show_spinner: function (results_el) {
+			jQuery('#relevanssi-live-ajax-search-spinner', results_el).addClass('rlv-has-spinner')
 		},
 
-		hide_spinner: function () {
-			jQuery('#relevanssi-live-ajax-search-spinner').removeClass('rlv-has-spinner')
+		hide_spinner: function (results_el) {
+			jQuery('#relevanssi-live-ajax-search-spinner', results_el).removeClass('rlv-has-spinner')
 		},
 
 		uniqid: function (prefix, more_entropy) {
