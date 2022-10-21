@@ -88,6 +88,7 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 = 2.1 =
 * Stops errors when editing a page with a Gutenberg search block in it.
 * New parameter `static_offset` helps when the JS counts the result box offset wrong. Setting this to `false` may solve these problems.
+* Fixes missing spinners: spinners only appeared in the first search form of the page.
 
 = 2.0.1 =
 * Renames the `has-spinner` class to `rlv-has-spinner` to avoid collisions with other plugins.
@@ -122,6 +123,9 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 2.1 =
+* New `static_offset` parameter, fixed spinners.
+
 = 2.0.1 =
 * Rename the CSS spinner class name.
 
