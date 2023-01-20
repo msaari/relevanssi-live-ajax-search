@@ -102,7 +102,7 @@
 
 					// bind to keyup
 					$input
-						.on("keyup", function (e) {
+						.on("keyup input", function (e) {
 							if (jQuery.inArray(e.keyCode, self.a11y_keys) > -1) {
 								return
 							}
@@ -141,7 +141,7 @@
 								self.show_spinner(self.results_el);
 							}
 						})
-						.on("keyup", jQuery.proxy(this.maybe_search, this));
+						.on("keyup input", jQuery.proxy(this.maybe_search, this));
 
 					// destroy the results when input focus is lost
 					if (

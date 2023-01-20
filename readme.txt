@@ -2,7 +2,7 @@
 Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
-Tested up to: 6.0
+Tested up to: 6.1
 Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -85,6 +85,8 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+* The search form now also responds to the `input` event, which makes the search respond to context menu paste.
+
 = 2.1 =
 * Stops errors when editing a page with a Gutenberg search block in it.
 * New parameter `static_offset` helps when the JS counts the result box offset wrong. Setting this to `false` may solve these problems.
