@@ -166,24 +166,29 @@
 				this.load_ajax_messages_template();
 			},
 
-			load_ajax_messages_template: function(){
-				jQuery.ajax({
-					url: relevanssi_live_search_params.ajaxurl,
-					data: 'action=relevanssi_live_search_messages',
-					dataType: 'json',
-					//action: 'wp_ajax_relevanssi_live_search_messages',
-					type: "GET",
-					complete: function(x, s){
-						//console.log('complete', x, s)
-					},
-					error: function(x, s, m){
-						//console.log('error', x, s, m)
-					},
-					success: function(response){
-						this.results_el.prepend(response);
-						this.messages = response;
-					}.bind(this),
-				});
+			load_ajax_messages_template: function () {
+				if (!relevanssi_live_search_params.messages_template) {
+					jQuery.ajax({
+						url: relevanssi_live_search_params.ajaxurl,
+						data: 'action=relevanssi_live_search_messages',
+						dataType: 'json',
+						//action: 'wp_ajax_relevanssi_live_search_messages',
+						type: "GET",
+						complete: function (x, s) {
+							//console.log('complete', x, s)
+						},
+						error: function (x, s, m) {
+							//console.log('error', x, s, m)
+						},
+						success: function (response) {
+							this.results_el.prepend(response);
+							this.messages = response;
+						}.bind(this),
+					});
+				} else {
+					this.results_el.prepend(relevanssi_live_search_params.messages_template);
+					this.messages = relevanssi_live_search_params.messages_template;
+				}
 			},
 
 			// perform the search

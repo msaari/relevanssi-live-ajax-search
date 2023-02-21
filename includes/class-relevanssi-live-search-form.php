@@ -125,6 +125,25 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 
 		$ajaxurl = admin_url( 'admin-ajax.php' );
 
+		/**
+		 * Filters whether to enable the AJAX messages template.
+		 *
+		 * If enabled, the messages template will be loaded live via AJAX. If
+		 * disabled, the messages template will be loaded via JS localize
+		 * script mechanism.
+		 *
+		 * @param bool $enable_ajax_messages Whether to enable the AJAX messages
+		 * template.
+		 */
+		if ( apply_filters( 'relevanssi_live_ajax_search_ajax_messages', false ) ) {
+			$message_template = '';
+		} else {
+			require_once dirname( __FILE__ ) . '/class-relevanssi-live-search-client.php';
+
+			$message_tpl_client = new Relevanssi_Live_Search_Client();
+			$message_template   = $message_tpl_client->get_ajax_message_template_string();
+		}
+
 		// Set up our parameters.
 		$params = array(
 			'ajaxurl'             => esc_url( $ajaxurl ),
@@ -132,6 +151,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 			'config'              => $this->configs,
 			'msg_no_config_found' => __( 'No valid Relevanssi Live Search configuration found!', 'relevanssi-live-ajax-search' ),
 			'msg_loading_results' => __( 'Loading search results.', 'relevanssi-live-ajax-search' ),
+			'messages_template'   => $message_template,
 		);
 
 		// We need to JSON encode the configs.

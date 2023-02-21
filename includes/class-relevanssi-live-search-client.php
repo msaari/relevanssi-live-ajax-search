@@ -32,12 +32,24 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		add_action( 'wp_ajax_relevanssi_live_search', array( $this, 'search' ) );
 		add_action( 'wp_ajax_nopriv_relevanssi_live_search', array( $this, 'search' ) );
 
-		add_action( 'wp_ajax_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
-		add_action( 'wp_ajax_nopriv_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
+		/**
+		 * Filters whether to enable the AJAX messages template.
+		 *
+		 * If enabled, the messages template will be loaded live via AJAX. If
+		 * disabled, the messages template will be loaded via JS localize
+		 * script mechanism.
+		 *
+		 * @param bool $enable_ajax_messages Whether to enable the AJAX messages
+		 * template.
+		 */
+		if ( apply_filters( 'relevanssi_live_ajax_search_ajax_messages', false ) ) {
+			add_action( 'wp_ajax_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
+			add_action( 'wp_ajax_nopriv_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
+		}
 	}
 
 	/**
-	 * Get the messages template
+	 * Get the messages template.
 	 */
 	public function get_ajax_messages_template() {
 		$messages_template = new Relevanssi_Live_Search_Template();
@@ -47,6 +59,19 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		include $template_file;
 		$content = ob_get_clean();
 		wp_send_json( $content );
+	}
+
+	/**
+	 * Get the messages template as a string.
+	 */
+	public function get_ajax_message_template_string() {
+		$messages_template = new Relevanssi_Live_Search_Template();
+		$template_file     = $messages_template->get_template_part( 'search-results', 'messages', false, 'messages' );
+
+		ob_start();
+		include $template_file;
+		$content = ob_get_clean();
+		return $content;
 	}
 
 	/**

@@ -85,6 +85,8 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+* The messages template is no longer loaded with AJAX. Instead, it is included in the JS localization. If you want to load it with AJAX, have the `relevanssi_live_ajax_search_ajax_messages` filter hook return `true`.
+
 = 2.2 =
 * The search form now also responds to the `input` event, which makes the search respond to context menu paste.
 * You can now override the default messages template by placing your custom template in the `relevanssi-live-ajax-search` directory in your theme.
