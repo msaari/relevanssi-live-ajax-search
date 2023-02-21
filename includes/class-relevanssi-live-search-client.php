@@ -40,8 +40,11 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 * Get the messages template
 	 */
 	public function get_ajax_messages_template() {
+		$messages_template = new Relevanssi_Live_Search_Template();
+		$template_file     = $messages_template->get_template_part( 'search-results', 'messages', false, 'messages' );
+
 		ob_start();
-		include __DIR__ . '/../templates/search-results-messages.php';
+		include $template_file;
 		$content = ob_get_clean();
 		wp_send_json( $content );
 	}

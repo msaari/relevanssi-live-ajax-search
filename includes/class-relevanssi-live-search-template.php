@@ -35,14 +35,16 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 	 *
 	 * @sine 1.0
 	 *
-	 * @param string      $slug The template slug (without file extension).
-	 * @param string|null $name The template name (appended to $slug if
+	 * @param string      $slug    The template slug (without file extension).
+	 * @param string|null $name    The template name (appended to $slug if
 	 * provided), default null.
-	 * @param bool        $load Whether to load the template part.
+	 * @param bool        $load    Whether to load the template part.
+	 * @param string      $context The context in which the template is being
+	 * loaded. Can be 'results' or 'messages'.
 	 *
 	 * @return bool|string The location of the applicable template file
 	 */
-	public function get_template_part( string $slug, $name = null, bool $load = true ) {
+	public function get_template_part( string $slug, $name = null, bool $load = true, string $context = 'results' ) {
 
 		do_action( 'get_template_part_' . $slug, $slug, $name );
 
@@ -53,10 +55,21 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 		}
 		$templates[] = $slug . '.php';
 
-		// Allow filtration of template parts.
-		$templates = apply_filters( 'relevanssi_live_search_get_template_part', $templates, $slug, $name );
+		/**
+		 * Allow filtration of template parts.
+		 *
+		 * @param array  $templates The template parts to be loaded.
+		 * @param string $slug      The template slug (without file extension).
+		 * @param string $name      The template name (appended to $slug if
+		 * provided), default null.
+		 * @param string $context   The context in which the template is being
+		 * loaded. Can be 'results' or 'messages'.
+		 *
+		 * @return array The template parts to be loaded.
+		 */
+		$templates = apply_filters( 'relevanssi_live_search_get_template_part', $templates, $slug, $name, $context );
 
-		return $this->locate_template( $templates, $load, false );
+		return $this->locate_template( $templates, $load, false, true, $context );
 	}
 
 	/**
@@ -65,17 +78,26 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 	 *
 	 * @since 1.0
 	 *
-	 * @param array $template_names The potential template names in order of
+	 * @param array  $template_names The potential template names in order of
 	 * precedence.
-	 * @param bool  $load           Whether to load the template file.
-	 * @param bool  $require_once   Whether to require the template file once.
+	 * @param bool   $load           Whether to load the template file.
+	 * @param bool   $require_once   Whether to require the template file once.
+	 * @param string $context        The context in which the template is being
+	 * loaded. Can be 'results' or 'messages'.
 	 *
 	 * @return bool|string The location of the applicable template file
 	 */
-	private function locate_template( array $template_names, bool $load = false, bool $require_once = true ) {
+	private function locate_template( array $template_names, bool $load = false, bool $require_once = true, string $context = 'results' ) {
 		// Default to not found.
 		$located = false;
 
+		/**
+		 * Allow filtering of the template directory name.
+		 *
+		 * @param string $template_dir The template directory name.
+		 *
+		 * @return string The template directory name.
+		 */
 		$template_dir = apply_filters( 'relevanssi_live_search_template_dir', 'relevanssi-live-ajax-search' );
 
 		// Try to find the template file.
@@ -111,7 +133,22 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 			}
 		}
 
-		$located = apply_filters( 'relevanssi_live_search_results_template', $located, $this );
+		$filter_hook = 'messages' === $context
+			? 'relevanssi_live_search_messages_template'
+			: 'relevanssi_live_search_results_template';
+
+		/**
+		 * Allow filtering of the template file location.
+		 *
+		 * The name of the filter hook depends on the context.
+		 *
+		 * @param string                          $located The location of the
+		 * template file.
+		 * @param Relevanssi_Live_Search_Template $this    The template object.
+		 *
+		 * @return string The location of the template file.
+		 */
+		$located = apply_filters( $filter_hook, $located, $this );
 
 		if ( ( true === $load ) && ! empty( $located ) ) {
 			load_template( $located, $require_once );

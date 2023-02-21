@@ -85,7 +85,11 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+= 2.2 =
 * The search form now also responds to the `input` event, which makes the search respond to context menu paste.
+* You can now override the default messages template by placing your custom template in the `relevanssi-live-ajax-search` directory in your theme.
+* New filter hook `relevanssi_live_search_messages_template` can be used to filter the messages template.
+* The filter hook `relevanssi_live_search_get_template_part` has an extra parameter for the context of the template: it can be `results` or `messages`, depending which template is loaded.
 
 = 2.1 =
 * Stops errors when editing a page with a Gutenberg search block in it.
