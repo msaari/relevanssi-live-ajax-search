@@ -20,5 +20,10 @@
 		"testMulti": "@test -c multisite.xml",
 		"coverage": "@test --coverage-html coverage",
 		"readme": "./vendor/bin/wp2md < readme.txt > readme.md"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
