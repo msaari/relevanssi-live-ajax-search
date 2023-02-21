@@ -3,7 +3,7 @@ Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
 Tested up to: 6.1
-Stable tag: 2.1
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,9 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 2.2 =
+* You can now override the messages template.
+
 = 2.1 =
 * New `static_offset` parameter, fixed spinners.
 
