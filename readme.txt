@@ -86,6 +86,7 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 
 == Changelog ==
 * The messages template is no longer loaded with AJAX. Instead, it is included in the JS localization. If you want to load it with AJAX, have the `relevanssi_live_ajax_search_ajax_messages` filter hook return `true`.
+* If the parent element is set with the `rlv-parentel` attribute and located away from the input field, the results will be placed under the parent element and not under the input field.
 
 = 2.2 =
 * The search form now also responds to the `input` event, which makes the search respond to context menu paste.

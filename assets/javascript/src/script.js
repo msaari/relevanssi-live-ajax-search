@@ -403,22 +403,33 @@
 
 			input_offset.top = this.better_offset(this.config.results.static_offset, $input)
 
-			// check for an offset
-			input_offset.left += parseInt(this.config.results.offset.x, 10)
-			input_offset.top += parseInt(this.config.results.offset.y, 10)
+			if (!this.parent_el) {
+				// check for an offset
+				input_offset.left += parseInt(this.config.results.offset.x, 10)
+				input_offset.top += parseInt(this.config.results.offset.y, 10)
 
-			// position the results container
-			switch (this.config.results.position) {
-				case "top":
-					results_top_offset = 0 - $results.height()
-					break
-				default:
-					results_top_offset = $input.outerHeight()
+				// position the results container
+				switch (this.config.results.position) {
+					case "top":
+						results_top_offset = 0 - $results.height()
+						break
+					default:
+						results_top_offset = $input.outerHeight()
+				}
+
+				// apply the offset and finalize the position
+				$results.css("left", input_offset.left)
+				$results.css("top", input_offset.top + results_top_offset + "px")
+			} else {
+				// check for an offset
+				let offset_left = parseInt(this.config.results.offset.x, 10)
+				let offset_top = parseInt(this.config.results.offset.y, 10)
+
+				// apply the offset and finalize the position
+				$results.css("left", offset_left + "px")
+				$results.css("top", offset_top + "px")
+				$results.css("position", "relative")
 			}
-
-			// apply the offset and finalize the position
-			$results.css("left", input_offset.left)
-			$results.css("top", input_offset.top + results_top_offset + "px")
 			if ("auto" === this.config.results.width) {
 				$results.width(
 					$input.outerWidth() -
