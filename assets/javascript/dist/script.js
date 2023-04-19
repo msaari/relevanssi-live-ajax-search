@@ -93,7 +93,12 @@
 
 					this.position_results();
 					jQuery(window).on("resize", function () {
-						self.position_results();
+						var form = $input.closest("form");
+						if (form.is(":hidden")) {
+							self.destroy_results();
+						} else {
+							self.position_results();
+						}
 					});
 
 					if (typeof this.config.abort_on_enter === "undefined") {
@@ -399,8 +404,9 @@
 					$results = this.results_el,
 					results_top_offset = 0;
 
+				var form = $input.closest("form");
 				// don't try to position a results element when the input field is hidden
-				if ($input.is(":hidden")) {
+				if ($input.is(":hidden") || form.is(":hidden")) {
 					return
 				}
 
@@ -419,7 +425,6 @@
 						default:
 							results_top_offset = $input.outerHeight();
 					}
-
 					// apply the offset and finalize the position
 					$results.css("left", input_offset.left);
 					$results.css("top", input_offset.top + results_top_offset + "px");
