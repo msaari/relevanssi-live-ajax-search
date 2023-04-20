@@ -39,7 +39,7 @@ class Relevanssi_Live_Search {
 	 *
 	 * @var string $version
 	 */
-	public $version = '2.2';
+	public $version = '2.3';
 
 	/**
 	 * The search results.
