@@ -93,12 +93,14 @@
 
 					this.position_results();
 					jQuery(window).on("resize", function () {
-						var form = $input.closest("form");
-						if (form.is(":hidden")) {
-							self.destroy_results();
-						} else {
-							self.position_results();
-						}
+						setTimeout(function() {
+							var form = $input.closest("form");
+							if (form.is(":hidden")) {
+								self.destroy_results();
+							} else {
+								self.position_results();
+							}
+						}, 100);
 					});
 
 					if (typeof this.config.abort_on_enter === "undefined") {
