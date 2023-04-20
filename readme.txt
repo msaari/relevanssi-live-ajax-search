@@ -3,7 +3,7 @@ Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
 Tested up to: 6.2
-Stable tag: 2.3
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,9 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+= 2.3.1 =
+* Fixes the bugs in search results placement introduced in 2.3.
+
 = 2.3 =
 * The messages template is no longer loaded with AJAX. Instead, it is included in the JS localization. If you want to load it with AJAX, have the `relevanssi_live_ajax_search_ajax_messages` filter hook return `true`.
 * If the parent element is set with the `rlv-parentel` attribute and located away from the input field, the results will be placed under the parent element and not under the input field.
@@ -134,6 +137,9 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 2.3.1 =
+* Fixes bugs in search results placement.
+
 = 2.3 =
 * Changed how the message template is loaded.
 

@@ -3,7 +3,7 @@
  * Plugin Name: Relevanssi Live Ajax Search
  * Plugin URI: https://www.relevanssi.com/live-ajax-search/
  * Description: Enhance your search forms with live search.
- * Version: 2.3
+ * Version: 2.3.1
  * Requires PHP: 7.0
  * Author: Mikko Saari
  * Author URI: https://www.mikkosaari.fi/
