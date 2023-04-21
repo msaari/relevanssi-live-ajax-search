@@ -121,6 +121,9 @@
 						if (!self.input_el.val().trim().length) {
 							self.destroy_results()
 						}
+						else if (self.results_showing && e.currentTarget.value.length < self.config.input.min_chars) {
+							self.destroy_results()
+						}
 						// if the user typed, show the results wrapper and spinner
 						else if (!self.results_showing && e.currentTarget.value.length >= self.config.input.min_chars) {
 							self.position_results()
