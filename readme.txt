@@ -137,6 +137,9 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+* If Relevanssi is active, Live Ajax Search makes sure min_chars cannot be lower than the minimum word length in Relevanssi.
+* When you remove letters from the search terms and go below the min_chars value, the results disappear instead of showing the spinner.
+
 = 2.3.1 =
 * Fixes bugs in search results placement.
 

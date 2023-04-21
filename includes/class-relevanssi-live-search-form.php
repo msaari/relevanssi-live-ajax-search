@@ -87,6 +87,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		add_filter( 'get_product_search_form', array( $this, 'get_search_form' ), 999, 1 );
 		add_filter( 'render_block', array( $this, 'render_block' ), 999, 2 );
 		add_action( 'wp_footer', array( $this, 'base_styles' ) );
+		add_filter( 'relevanssi_live_search_configs', array( $this, 'filter_configs' ) );
 
 		// The configs store all of the various configuration arrays that can
 		// be used at runtime.
@@ -291,6 +292,27 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 			}
 		</style>
 		<?php
+	}
+
+	/**
+	 * Checks that the min_chars setting is not lower than the Relevanssi
+	 * minimum word length setting.
+	 *
+	 * @param array $configs The configs.
+	 *
+	 * @return array The configs.
+	 */
+	public function filter_configs( array $configs ) : array {
+		$relevanssi_min_word_length = get_option( 'relevanssi_min_word_length', 0 );
+		if ( ! $relevanssi_min_word_length ) {
+			return $configs;
+		}
+		foreach ( $configs as $key => $config ) {
+			if ( $config['input']['min_chars'] < $relevanssi_min_word_length ) {
+				$configs[ $key ]['input']['min_chars'] = $relevanssi_min_word_length;
+			}
+		}
+		return $configs;
 	}
 
 }
