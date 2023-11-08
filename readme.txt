@@ -2,8 +2,8 @@
 Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
-Tested up to: 6.2
-Stable tag: 2.3.1
+Tested up to: 6.4
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,9 +85,11 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
-= 2.3.2 =
+= 2.4 =
 * New filter hook `relevanssi_live_search_template_function` lets you override the default template function used to display the results.
 * Removes the unnecessary origin_id parameter.
+* If Relevanssi is active, Live Ajax Search makes sure min_chars cannot be lower than the minimum word length in Relevanssi.
+* When you remove letters from the search terms and go below the min_chars value, the results disappear instead of showing the spinner.
 
 = 2.3.1 =
 * Fixes the bugs in search results placement introduced in 2.3.
@@ -141,8 +143,8 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
-* If Relevanssi is active, Live Ajax Search makes sure min_chars cannot be lower than the minimum word length in Relevanssi.
-* When you remove letters from the search terms and go below the min_chars value, the results disappear instead of showing the spinner.
+= 2.4 =
+* Better minimum character handling, new filter hook for template override.
 
 = 2.3.1 =
 * Fixes bugs in search results placement.
