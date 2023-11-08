@@ -157,7 +157,28 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		// Output the results using the results template.
 		$results = new Relevanssi_Live_Search_Template();
 
-		$results->get_template_part( $template );
+		/**
+		 * Filters the template function to use for displaying the results.
+		 *
+		 * The default is an empty string, which will use the default template
+		 * function. If a function is specified and exists, it will be used
+		 * instead.
+		 *
+		 * @param string $template_function The template function to use for
+		 * displaying the results.
+		 *
+		 * @return string The template function to use for displaying the
+		 * results.
+		 */
+		$template_function = apply_filters(
+			'relevanssi_live_search_template_function',
+			''
+		);
+		if ( function_exists( $template_function ) ) {
+			call_user_func( $template_function, $mode );
+		} else {
+			$results->get_template_part( $template );
+		}
 	}
 
 	/**

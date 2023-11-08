@@ -86,6 +86,7 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 
 == Changelog ==
 = 2.3.2 =
+* New filter hook `relevanssi_live_search_template_function` lets you override the default template function used to display the results.
 * Removes the unnecessary origin_id parameter.
 
 = 2.3.1 =
