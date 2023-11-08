@@ -148,7 +148,6 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		// Set up our parameters.
 		$params = array(
 			'ajaxurl'             => esc_url( $ajaxurl ),
-			'origin_id'           => get_queried_object_id(),
 			'config'              => $this->configs,
 			'msg_no_config_found' => __( 'No valid Relevanssi Live Search configuration found!', 'relevanssi-live-ajax-search' ),
 			'msg_loading_results' => __( 'Loading search results.', 'relevanssi-live-ajax-search' ),

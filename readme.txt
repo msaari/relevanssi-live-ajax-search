@@ -85,6 +85,9 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+= 2.3.2 =
+* Removes the unnecessary origin_id parameter.
+
 = 2.3.1 =
 * Fixes the bugs in search results placement introduced in 2.3.
 

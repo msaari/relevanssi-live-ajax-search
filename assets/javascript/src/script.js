@@ -220,9 +220,7 @@
 			// append our action and (redundant) query (so as to save the trouble of finding it again server side)
 			values +=
 				"&action=relevanssi_live_search&rlvquery=" +
-				encodeURIComponent($input.val()) +
-				"&origin_id=" +
-				parseInt(relevanssi_live_search_params.origin_id, 10)
+				encodeURIComponent($input.val())
 
 			if (action.indexOf("?") !== -1) {
 				action = action.split("?")
