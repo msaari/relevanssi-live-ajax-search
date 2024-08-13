@@ -2,8 +2,8 @@
 Contributors: msaari
 Tags: search, live, ajax
 Requires at least: 4.9
-Tested up to: 6.4
-Stable tag: 2.4
+Tested up to: 6.6
+Stable tag: 2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,7 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+= 2.5 =
 * Security update: if used with the default WP search, this plugin could be used to see private post titles. This is no longer possible. With Relevanssi, this has never been a problem.
 
 = 2.4 =
@@ -145,6 +146,9 @@ This will make Relevanssi Live Ajax Search use a different method of fetching th
 * First version based on the version 1.6.1 of SearchWP Live Ajax Search.
 
 == Upgrade Notice ==
+= 2.5 =
+* Security update: no more access to private post titles.
+
 = 2.4 =
 * Better minimum character handling, new filter hook for template override.
 
