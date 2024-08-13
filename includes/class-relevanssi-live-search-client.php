@@ -46,6 +46,10 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 			add_action( 'wp_ajax_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
 			add_action( 'wp_ajax_nopriv_relevanssi_live_search_messages', array( $this, 'get_ajax_messages_template' ) );
 		}
+
+		if ( ! function_exists( 'relevanssi_search' ) ) {
+			add_filter( 'relevanssi_live_search_query_args', array( $this, 'clean_up_args' ) );
+		}
 	}
 
 	/**
@@ -199,4 +203,33 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 		return $per_page;
 	}
 
+	/**
+	 * Control the search parameters if Relevanssi is not active.
+	 *
+	 * @param array $args The search arguments.
+	 *
+	 * @return array $args The cleaned up search arguments.
+	 */
+	public function clean_up_args( $args ) {
+		$args['post_status'] = 'publish';
+		$args['posts_per_page'] = $this->get_posts_per_page();
+
+		if ( isset( $args['has_password'] ) ) {
+			unset( $args['has_password'] );
+		}
+		if ( isset( $args['post_password'] ) ) {
+			unset( $args['post_password'] );
+		}
+		if ( isset( $args['cache_results'] ) ) {
+			unset( $args['cache_results'] );
+		}
+		if ( isset( $args['update_post_meta_cache'] ) ) {
+			unset( $args['update_post_meta_cache'] );
+		}
+		if ( isset( $args['update_post_term_cache'] ) ) {
+			unset( $args['update_post_term_cache'] );
+		}
+
+		return $args;
+	}
 }

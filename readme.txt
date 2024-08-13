@@ -85,6 +85,8 @@ For some reason, the combination of Relevanssi Live Ajax Search, Relevanssi and 
 This will make Relevanssi Live Ajax Search use a different method of fetching the results. This method is compatible with WPML. This method uses the `search-results-query.php` template instead of the default `search-results.php` template in Relevanssi Live Ajax Search, so take note if you want to customize the template to use the right base template for your customization.
 
 == Changelog ==
+* Security update: if used with the default WP search, this plugin could be used to see private post titles. This is no longer possible. With Relevanssi, this has never been a problem.
+
 = 2.4 =
 * New filter hook `relevanssi_live_search_template_function` lets you override the default template function used to display the results.
 * Removes the unnecessary origin_id parameter.
