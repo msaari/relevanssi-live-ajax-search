@@ -61,7 +61,8 @@ if ( $relevanssi_query->have_posts() ) {
 		<div class="relevanssi-live-search-result" role="option" id="" aria-selected="false" data-postype="<?php echo esc_attr( get_post_type() ); ?>" data-postid="<?php echo esc_attr( $relevanssi_post_id ); ?>" data-termid="<?php echo esc_attr( $relevanssi_term_id ); ?>">
 			<p>
 				<a href="<?php the_permalink(); ?>">
-					<?php the_title(); ?> &raquo;
+					<?php the_title(); ?>
+					<?php echo wp_kses_post( apply_filters( 'relevanssi_live_search_result_arrow', '&raquo;', $post ) ); ?>
 				</a>
 			</p>
 		</div>
