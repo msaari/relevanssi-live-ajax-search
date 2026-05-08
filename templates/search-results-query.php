@@ -55,12 +55,16 @@ if ( $relevanssi_query->have_posts() ) {
 
 	while ( $relevanssi_query->have_posts() ) {
 		$relevanssi_query->the_post();
+		$relevanssi_post_id = get_the_ID() > 0 ? intval( get_the_ID() ) : '';
+		$relevanssi_term_id = isset( $post->term_id ) && intval( $post->term_id ) > 0 ? intval( $post->term_id ) : '';
 		?>
-	<div class="relevanssi-live-search-result" role="option" id="" aria-selected="false">
-		<p><a href="<?php the_permalink(); ?>">
-			<?php the_title(); ?> &raquo;
-		</a></p>
-	</div>
+		<div class="relevanssi-live-search-result" role="option" id="" aria-selected="false" data-postype="<?php echo esc_attr( get_post_type() ); ?>" data-postid="<?php echo esc_attr( $relevanssi_post_id ); ?>" data-termid="<?php echo esc_attr( $relevanssi_term_id ); ?>">
+			<p>
+				<a href="<?php the_permalink(); ?>">
+					<?php the_title(); ?> &raquo;
+				</a>
+			</p>
+		</div>
 		<?php
 	}
 
