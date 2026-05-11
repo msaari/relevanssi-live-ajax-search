@@ -1,0 +1,59 @@
+= 2.5 =
+* Security update: if used with the default WP search, this plugin could be used to see private post titles. This is no longer possible. With Relevanssi, this has never been a problem.
+
+= 2.4 =
+* New filter hook `relevanssi_live_search_template_function` lets you override the default template function used to display the results.
+* Removes the unnecessary origin_id parameter.
+* If Relevanssi is active, Live Ajax Search makes sure min_chars cannot be lower than the minimum word length in Relevanssi.
+* When you remove letters from the search terms and go below the min_chars value, the results disappear instead of showing the spinner.
+
+= 2.3.1 =
+* Fixes the bugs in search results placement introduced in 2.3.
+
+= 2.3 =
+* The messages template is no longer loaded with AJAX. Instead, it is included in the JS localization. If you want to load it with AJAX, have the `relevanssi_live_ajax_search_ajax_messages` filter hook return `true`.
+* If the parent element is set with the `rlv-parentel` attribute and located away from the input field, the results will be placed under the parent element and not under the input field.
+* If the window is resized and that makes the search form hidden, the search results will also be removed.
+
+= 2.2 =
+* The search form now also responds to the `input` event, which makes the search respond to context menu paste.
+* You can now override the default messages template by placing your custom template in the `relevanssi-live-ajax-search` directory in your theme.
+* New filter hook `relevanssi_live_search_messages_template` can be used to filter the messages template.
+* The filter hook `relevanssi_live_search_get_template_part` has an extra parameter for the context of the template: it can be `results` or `messages`, depending which template is loaded.
+
+= 2.1 =
+* Stops errors when editing a page with a Gutenberg search block in it.
+* New parameter `static_offset` helps when the JS counts the result box offset wrong. Setting this to `false` may solve these problems.
+* Fixes missing spinners: spinners only appeared in the first search form of the page.
+
+= 2.0.1 =
+* Renames the `has-spinner` class to `rlv-has-spinner` to avoid collisions with other plugins.
+* Include an updated version of spinner SCSS in the plugin instead of getting an outdated version from npm.
+
+= 2.0.0 =
+* The `relevanssi_live_search_control_plugins_during_search` functionality has been removed.
+* The search now uses a CSS spinner instead of the old Javascript spinner.
+* Improved accessibility: the instructions for screen reader users are moved from the `aria-label` parameter to a separate `span` element that is hidden from sight.
+
+= 1.2.2 =
+* Fixes the `relevanssi_live_search_base_styles` filter hook, which was in reverse: now it works as expected and disables styles when you give it `false`.
+
+= 1.2.1 =
+* Adds automatic hijack for WooCommerce product search form.
+
+= 1.2.0 =
+* The way this plugin uses `query_posts()` can lead to problems (for example with WPML). It is now possible to use a new `WP_Query` instead, which is safer.
+* New filter hook `relevanssi_live_search_mode` controls which mode is used: `query_posts` (the default value) is the old way, any other value uses WP_Query.
+* There's a new template file `search-results-query.php`. This template is used for the `WP_Query` method.
+
+= 1.1.0 =
+* Improved accessibility: screen reader users get better notifications of what's happening.
+* Improved accessibility: the default location for the search results is now the next tab stop from the search form, within div#rlvlive_1.
+* Removes JQuery migration deprecation warnings.
+* The search results now show the total number of results found. These changes are in the default template, so if you're using a custom template, check the default template.
+* New filter hook `relevanssi_live_search_status_location` controls where the total is displayed ('before', 'after' or nowhere for any other value, in which case only the screen reader status is added).
+* New filter hook `relevanssi_live_search_add_result_div` controls whether an extra div is added for the results.
+* If Relevanssi is available, searches that find no results show 'Did you mean' suggestions.
+
+= 1.0.0 =
+* First version based on the version 1.6.1 of SearchWP Live Ajax Search.

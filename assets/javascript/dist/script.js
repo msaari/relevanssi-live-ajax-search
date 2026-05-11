@@ -585,7 +585,7 @@
 					jQuery.data(
 						this,
 						"plugin_" + plugin_name,
-						new RelevanssiLiveSearch(jQuery(this), options)
+						new RelevanssiLiveSearch(jQuery(this))
 					);
 				}
 			});

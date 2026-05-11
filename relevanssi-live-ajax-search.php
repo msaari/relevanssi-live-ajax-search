@@ -3,7 +3,7 @@
  * Plugin Name: Relevanssi Live Ajax Search
  * Plugin URI: https://www.relevanssi.com/live-ajax-search/
  * Description: Enhance your search forms with live search.
- * Version: 2.5
+ * Version: 2.6
  * Requires PHP: 7.0
  * Author: Mikko Saari
  * Author URI: https://www.mikkosaari.fi/
@@ -33,7 +33,7 @@
 	SearchWP Live Ajax Search plugin by SearchWP, LLC. Copyright for the
 	original code is 2014-2020 SearchWP, LLC.
 
-	Copyright 2023 Mikko Saari (email: mikko@mikkosaari.fi)
+	Copyright 2026 Mikko Saari (email: mikko@mikkosaari.fi)
 */
 
 // Exit if accessed directly.
