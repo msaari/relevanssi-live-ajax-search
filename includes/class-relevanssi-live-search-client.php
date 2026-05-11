@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once dirname( __FILE__ ) . '/class-relevanssi-live-search-template.php';
+require_once __DIR__ . '/class-relevanssi-live-search-template.php';
 
 /**
  * Class Relevanssi_Live_Search_Client
@@ -196,7 +196,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 *
 	 * @return int $per_page the number of items to display.
 	 */
-	public function get_posts_per_page() : int {
+	public function get_posts_per_page(): int {
 		// The default is 7 posts, but that can be filtered.
 		$per_page = absint( apply_filters( 'relevanssi_live_search_posts_per_page', 7 ) );
 
@@ -211,7 +211,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 	 * @return array $args The cleaned up search arguments.
 	 */
 	public function clean_up_args( $args ) {
-		$args['post_status'] = 'publish';
+		$args['post_status']    = 'publish';
 		$args['posts_per_page'] = $this->get_posts_per_page();
 
 		if ( isset( $args['has_password'] ) ) {

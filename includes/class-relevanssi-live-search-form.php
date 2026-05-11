@@ -139,7 +139,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		if ( apply_filters( 'relevanssi_live_ajax_search_ajax_messages', false ) ) {
 			$message_template = '';
 		} else {
-			require_once dirname( __FILE__ ) . '/class-relevanssi-live-search-client.php';
+			require_once __DIR__ . '/class-relevanssi-live-search-client.php';
 
 			$message_tpl_client = new Relevanssi_Live_Search_Client();
 			$message_template   = $message_tpl_client->get_ajax_message_template_string();
@@ -174,7 +174,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 *
 	 * @return string Markup for the search form.
 	 */
-	public function get_search_form( string $html ) : string {
+	public function get_search_form( string $html ): string {
 		$html = $this->modify_search_form( $html );
 		return $html;
 	}
@@ -200,14 +200,14 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 *
 	 * @param string $html The generated markup for the search form.
 	 */
-	private function modify_search_form( string $html ) : string {
+	private function modify_search_form( string $html ): string {
 		/**
 		 * Prevents hijacking the search form.
 		 *
 		 * If this filter hook returns `false`, Relevanssi Live Ajax Search
 		 * will not add the parameters to the search form.
 		 *
-		 * @param bool If true, take over the search form.
+		 * @param bool $hijack If true, take over the search form.
 		 */
 		if ( ! apply_filters( 'relevanssi_live_search_hijack_get_search_form', true ) ) {
 			return $html;
@@ -216,7 +216,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		/**
 		 * Filters the default config name.
 		 *
-		 * @param string The form config name. Default 'default'.
+		 * @param string $name The form config name. Default 'default'.
 		 */
 		$config = apply_filters( 'relevanssi_live_search_get_search_form_config', 'default' );
 
@@ -228,7 +228,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		 * tab press. If this filter returns false, the result div will not be
 		 * added and the rlvparentel data attribute will not be set.
 		 *
-		 * @param bool If true, add the result div. Default true.
+		 * @param bool $add If true, add the result div. Default true.
 		 */
 		$add_result_div = apply_filters( 'relevanssi_live_search_add_result_div', true );
 
@@ -260,7 +260,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		/**
 		 * Allows developers to disable the base styles.
 		 *
-		 * @param boolean Whether or not to enable the base styles.
+		 * @param boolean $enable Whether or not to enable the base styles.
 		 */
 		if ( false === apply_filters( 'relevanssi_live_search_base_styles', true ) ) {
 			return;
@@ -301,7 +301,7 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 	 *
 	 * @return array The configs.
 	 */
-	public function filter_configs( array $configs ) : array {
+	public function filter_configs( array $configs ): array {
 		$relevanssi_min_word_length = get_option( 'relevanssi_min_word_length', 0 );
 		if ( ! $relevanssi_min_word_length ) {
 			return $configs;
@@ -313,5 +313,4 @@ class Relevanssi_Live_Search_Form extends Relevanssi_Live_Search {
 		}
 		return $configs;
 	}
-
 }

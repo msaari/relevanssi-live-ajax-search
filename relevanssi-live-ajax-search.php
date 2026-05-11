@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search.php';
+require_once __DIR__ . '/includes/class-relevanssi-live-search.php';
 
 /**
  * Handles the search request.
@@ -49,7 +49,7 @@ require_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search.php';
  * @param boolean $execute_search If true, run the search.
  */
 function relevanssi_live_search_request_handler( $execute_search = false ) {
-	include_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-client.php';
+	include_once __DIR__ . '/includes/class-relevanssi-live-search-client.php';
 
 	$client = new Relevanssi_Live_Search_Client();
 	$client->setup();
@@ -75,7 +75,7 @@ function relevanssi_live_search_init() {
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		relevanssi_live_search_request_handler();
 	} else {
-		include_once dirname( __FILE__ ) . '/includes/class-relevanssi-live-search-form.php';
+		include_once __DIR__ . '/includes/class-relevanssi-live-search-form.php';
 		$form = new Relevanssi_Live_Search_Form();
 		$form->setup();
 	}

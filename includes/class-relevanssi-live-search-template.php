@@ -26,7 +26,7 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 	 *
 	 * @return string The template directory within this plugin
 	 */
-	public function get_template_directory() : string {
+	public function get_template_directory(): string {
 		return trailingslashit( $this->directory_name ) . 'templates';
 	}
 
@@ -69,7 +69,7 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 		 */
 		$templates = apply_filters( 'relevanssi_live_search_get_template_part', $templates, $slug, $name, $context );
 
-		return $this->locate_template( $templates, $load, false, true, $context );
+		return $this->locate_template( $templates, $load, false, $context );
 	}
 
 	/**
@@ -80,14 +80,14 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 	 *
 	 * @param array  $template_names The potential template names in order of
 	 * precedence.
-	 * @param bool   $load           Whether to load the template file.
-	 * @param bool   $require_once   Whether to require the template file once.
-	 * @param string $context        The context in which the template is being
+	 * @param bool   $load      Whether to load the template file.
+	 * @param bool   $only_once Whether to require the template file once.
+	 * @param string $context   The context in which the template is being
 	 * loaded. Can be 'results' or 'messages'.
 	 *
 	 * @return bool|string The location of the applicable template file
 	 */
-	private function locate_template( array $template_names, bool $load = false, bool $require_once = true, string $context = 'results' ) {
+	private function locate_template( array $template_names, bool $load = false, bool $only_once = true, string $context = 'results' ) {
 		// Default to not found.
 		$located = false;
 
@@ -151,10 +151,9 @@ class Relevanssi_Live_Search_Template extends Relevanssi_Live_Search {
 		$located = apply_filters( $filter_hook, $located, $this );
 
 		if ( ( true === $load ) && ! empty( $located ) ) {
-			load_template( $located, $require_once );
+			load_template( $located, $only_once );
 		}
 
 		return $located;
 	}
-
 }
