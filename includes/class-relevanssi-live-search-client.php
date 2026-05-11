@@ -93,7 +93,7 @@ class Relevanssi_Live_Search_Client extends Relevanssi_Live_Search {
 
 		$query = sanitize_text_field( stripslashes( $_REQUEST['rlvquery'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 
-		$args      = $_POST; // phpcs:ignore WordPress.Security.NonceVerification
+		$args      = $_REQUEST; // phpcs:ignore WordPress.Security.NonceVerification
 		$args['s'] = $query;
 
 		$args['posts_per_page'] = isset( $_REQUEST['posts_per_page'] ) // phpcs:ignore WordPress.Security.NonceVerification
